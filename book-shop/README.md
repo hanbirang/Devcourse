@@ -58,3 +58,34 @@ package.json 파일이 새로 생기는데, 위와 같이 작성됨.
 | HTTP status code | 성공 200 |
 | Request Body | `{`<br>`    password : “사용자가 입력한 비밀번호”`<br>`} `|
 | Response Body | |
+
+## 도서 API
+1. 전체 도서 조회
+
+| 내용 | 값 |
+| --- | --- |
+| Method | GET |
+| URI | /books |
+| HTTP status code | 성공 20 |
+| Request Body | `[`<br>`    {`<br>`        id : 도서 id,,”`<br>`        title : “도서 제목”,`<br>`        summary : “요약 설명”, `<br>`        author : “도서 작가”,`<br>`         price : 가격,`<br>`         likes : 좋아요,`<br>`         pubDate : “출간일”`<br>`    },`<br>`    {`<br>`        id : 도서 id,,”`<br>`        title : “도서 제목”,`<br>`        summary : “요약 설명”,} `<br>`        author : “도서 작가”,`<br>`         price : 가격,`<br>`         likes : 좋아요,`<br>`         pubDate : “출간일”`<br>`    }`<br>`]`|
+| Response Body | |
+
+2. 개별 도서 조회
+
+| 내용 | 값 |
+| --- | --- |
+| Method | GET |
+| URI | /books/:id |
+| HTTP status code | 성공 20 |
+| Request Body | |
+| Response Body |  `{`<br>`    id : 도서 id,,”`<br>`    title : “도서 제목”,`<br>`    category : “카테고리”,`<br>`    format : “포맷”,`<br>`    isbn : “isbn”,`<br>`    summary : “요약 설명”, `<br>`    description : “상세 설명”,`<br>`    author : “도서 작가”,`<br>`     pages : 쪽 수,`<br>`     index : “목차”, `<br>`     price : 가격,`<br>`     likes : 좋아요,`<br>`     liked : boolean ,`<br>`     pubDate : “출간일”`<br>`}` |
+
+3. 카테고리 별 도서 목록 조회
+
+| 내용 | 값 |
+| --- | --- |
+| Method | GET |
+| URI | /books?categoryId = {categoryId}&new={boolean} |
+| HTTP status code | 성공 20 |
+| Request Body | |
+| Response Body |  `[`<br>`    {`<br>`        id : 도서 id,,”`<br>`        title : “도서 제목”,`<br>`        summary : “요약 설명”, `<br>`        author : “도서 작가”,`<br>`         price : 가격,`<br>`         likes : 좋아요,`<br>`         pubDate : “출간일”`<br>`    },`<br>`    {`<br>`        id : 도서 id,,”`<br>`        title : “도서 제목”,`<br>`        summary : “요약 설명”, `<br>`        author : “도서 작가”,`<br>`         price : 가격,`<br>`         likes : 좋아요,`<br>`         pubDate : “출간일”`<br>`    }`<br>`]`|
