@@ -90,9 +90,14 @@ const passwordResetRequest = (req, res) => {
 
 const passwordReset = (req, res) => {
     const {email, password} = req.body;
-    
-    let sql = `UPDATE users SET password = ? WHERE email = ?`;
-    let values = [password, email];
+
+    let sql = `UPDATE users SET password = ?, salt = ? WHERE email = ?`;
+
+    // 암호화된 비밀번호와 salt 값을 같이 DB에 저장 
+    const salt = crypto.randomBytes(10).toString('base64');
+    const hashPassword = crypto.pbkdf2Sync(password, salt, 10000, 10, 'sha512').toString('base64');
+
+    let values = [hashPassword, salt, email];
 
     conn.query(sql, values,
         (err, results) => {
@@ -106,7 +111,7 @@ const passwordReset = (req, res) => {
             } else {
                 return res.status(StatusCodes.OK).json(results)
             }
-        })
+        });
 };
 
 module.exports = {
