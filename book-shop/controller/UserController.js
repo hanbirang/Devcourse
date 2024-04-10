@@ -13,8 +13,6 @@ const join = (req, res) => {
     // 암호화된 비밀번호와 salt 값을 같이 DB에 저장 
     const salt = crypto.randomBytes(10).toString('base64');
     const hashPassword = crypto.pbkdf2Sync(password, salt, 10000, 10, 'sha512').toString('base64');
-
-    // 로그인 시, 이메일&비밀번호 (날 것) => salt 값 꺼내서 비밀번호 암호화 해보고 => DB 비밀번호랑 비교
     
     let values = [email, hashPassword, salt];
     conn.query(sql, values,
@@ -39,7 +37,12 @@ const login = (req, res) => {
             } 
 
             const loginUser = results[0];
-            if (loginUser && loginUser.password == password) {
+
+            // salt 값 꺼내서 비밀번호 암호화 해보고
+            const hashPassword = crypto.pbkdf2Sync(password, loginUser.salt, 10000, 10, 'sha512').toString('base64');
+            
+            // => DB 비밀번호랑 비교
+            if (loginUser && loginUser.password == hashPassword) {
                 // 토큰 발행 
                 const token = jwt.sign({
                     email : loginUser.email
@@ -87,6 +90,7 @@ const passwordResetRequest = (req, res) => {
 
 const passwordReset = (req, res) => {
     const {email, password} = req.body;
+    
     let sql = `UPDATE users SET password = ? WHERE email = ?`;
     let values = [password, email];
 
