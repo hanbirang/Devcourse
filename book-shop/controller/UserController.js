@@ -49,8 +49,6 @@ const login = (req, res) => {
                 return res.status(StatusCodes.OK).json(results);
             } else {
                 return res.status(StatusCodes.UNAUTHORIZED).end();
-                // 401 : Unauthorized (미인증) - 서버가 누군지 모름 
-                // 403 : Forbidden (접근 권리 없음) - 서버가 누군지 앎   
             }
         })
 };
@@ -69,7 +67,9 @@ const passwordResetRequest = (req, res) => {
             // 이메일로 유저가 있는지 찾아보기
             const user = results[0];
             if (user) {
-                return res.status(StatusCodes.OK).end();
+                return res.status(StatusCodes.OK).json({
+                    email : email
+                });
             } else {
                 return res.status(StatusCodes.UNAUTHORIZED).end();
             }
@@ -78,7 +78,23 @@ const passwordResetRequest = (req, res) => {
 };
 
 const passwordReset = (req, res) => {
-    res.json('비밀번호 초기화');
+    const {email, password} = req.body;
+    let sql = `UPDATE users SET password = ? WHERE email = ?`;
+    let values = [password, email];
+
+    conn.query(sql, values,
+        (err, results) => {
+            if (err) {
+                console.log(err);
+                return res.status(StatusCodes.BAD_REQUEST).end();
+            }
+
+            if (results.affectedRows == 0) {
+                return res.status(StatusCodes.BAD_REQUEST).end();
+            } else {
+                return res.status(StatusCodes.OK).json(results)
+            }
+        })
 };
 
 module.exports = {
