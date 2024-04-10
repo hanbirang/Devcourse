@@ -56,7 +56,25 @@ const login = (req, res) => {
 };
 
 const passwordResetRequest = (req, res) => {
-    res.json('비밀번호 초기화 요청');
+    const {email} = req.body;
+
+    let sql = `SELECT * FROM users WHERE email = ?`;
+    conn.query(sql, email,
+        (err, results) => {
+            if (err) {
+                console.log(err);
+                return res.status(StatusCodes.BAD_REQUEST).end();
+            }
+            
+            // 이메일로 유저가 있는지 찾아보기
+            const user = results[0];
+            if (user) {
+                return res.status(StatusCodes.OK).end();
+            } else {
+                return res.status(StatusCodes.UNAUTHORIZED).end();
+            }
+        }
+    );
 };
 
 const passwordReset = (req, res) => {
