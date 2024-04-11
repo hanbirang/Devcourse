@@ -14,7 +14,22 @@ const allBooks = (req, res) => {
 };
 
 const bookDetail = (req, res) => {
-    res.json('개별 도서 조회 ');
+    let {id} = req.params;
+    id = parseInt(id);
+
+    let sql = `SELECT * FROM books WHERE id = ?`;
+    conn.query(sql, id,
+        (err, results) => {
+            if (err) {
+                console.log(err);
+                return res.status(StatusCodes.BAD_REQUEST).end();
+            }
+
+            if (results[0])
+                return res.status(StatusCodes.OK).json(results[0]);
+            else 
+                return res.status(StatusCodes.NOT_FOUND).end();
+    });
 };
 
 const booksByCategory = (req, res) => {
