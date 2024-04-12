@@ -30,7 +30,7 @@ package.json 파일이 새로 생기는데, 위와 같이 작성됨.
 | Response Body | |
 
 2. 로그인
-
+   
 | 내용 | 값 |
 | --- | --- |
 | Method | POST |
@@ -39,7 +39,7 @@ package.json 파일이 새로 생기는데, 위와 같이 작성됨.
 | Request Body | `{`<br>`    email : “사용자가 입력한 이메일,”`<br>`    password : “사용자가 입력한 비밀번호”`<br>`} `|
 | Response Body | |
 
-3. 비밀번호 초기화 요청 
+3. 비밀번호 초기화 요청
 
 | 내용 | 값 |
 | --- | --- |
@@ -89,3 +89,24 @@ package.json 파일이 새로 생기는데, 위와 같이 작성됨.
 | HTTP status code | 성공 20 |
 | Request Body | |
 | Response Body |  `[`<br>`    {`<br>`        id : 도서 id,,”`<br>`        title : “도서 제목”,`<br>`        summary : “요약 설명”, `<br>`        author : “도서 작가”,`<br>`         price : 가격,`<br>`         likes : 좋아요,`<br>`         pubDate : “출간일”`<br>`    },`<br>`    {`<br>`        id : 도서 id,,”`<br>`        title : “도서 제목”,`<br>`        summary : “요약 설명”, `<br>`        author : “도서 작가”,`<br>`         price : 가격,`<br>`         likes : 좋아요,`<br>`         pubDate : “출간일”`<br>`    }`<br>`]`|
+
+## 좋아요 API 
+1. 좋아요 추가
+   
+| 내용 | 값 |
+| --- | --- |
+| Method | POST |
+| URI | /likes/{bookId} |
+| HTTP status code | 성공 200 |
+| Request Body | |
+| Response Body | |
+
+2. 좋아요 취소
+
+| 내용 | 값 |
+| --- | --- |
+| Method | DELETE |
+| URI | /likes/{bookId} |
+| HTTP status code | 성공 200 |
+| Request Body | |
+| Response Body | |
