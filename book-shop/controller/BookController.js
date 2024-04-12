@@ -1,35 +1,37 @@
 const conn = require('../mariadb'); // db 모듈
 const {StatusCodes} = require('http-status-codes'); // status code 모듈
 
+// (카테고리 별, 신간 여부) 전체 도서 목록 조회 
 const allBooks = (req, res) => {
-    let {category_id} = req.query;
+    let {category_id, newBook} = req.query;
 
-    if (category_id) {
-        // 카테고리 별 조회 
-        let sql = `SELECT * FROM books WHERE category_id = ?`;
-        conn.query(sql, category_id,
-            (err, results) => {
-                if (err) {
-                    console.log(err);
-                    return res.status(StatusCodes.BAD_REQUEST).end();
-                }
-
-                if (results.length)
-                    return res.status(StatusCodes.OK).json(results);
-                else 
-                    return res.status(StatusCodes.NOT_FOUND).end();
-        });
-    } else {
-        // (요약된) 전체 도서 리스트
-        let sql = `SELECT * FROM books`;
-        conn.query(sql, (err, results) => {
+    let sql = `SELECT * FROM books`;
+    let values = [];
+    if (category_id && newBook) {
+        sql += ` WHERE category_id = ? AND pub_date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW();`;
+        values = [category_id, newBook];
+    }
+    else if (category_id) {
+        sql += ` WHERE category_id = ?`;
+        values = category_id;
+    }
+    else if (newBook) {
+        sql += ` WHERE pub_date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW();`;
+        values = news;
+    }
+    
+    conn.query(sql, values,
+        (err, results) => {
             if (err) {
                 console.log(err);
                 return res.status(StatusCodes.BAD_REQUEST).end();
             }
-            return res.status(StatusCodes.OK).json(results);
-        });
-    }
+
+            if (results.length)
+                return res.status(StatusCodes.OK).json(results);
+            else 
+                return res.status(StatusCodes.NOT_FOUND).end();
+    });
 };
 
 const bookDetail = (req, res) => {
@@ -51,6 +53,7 @@ const bookDetail = (req, res) => {
                 return res.status(StatusCodes.NOT_FOUND).end();
     });
 };
+
 
 module.exports = {
     allBooks,
