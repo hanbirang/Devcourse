@@ -152,3 +152,33 @@ package.json 파일이 새로 생기는데, 위와 같이 작성됨.
 | Request Body | `[ cartItemId, cartItemId, …]` |
 | Response Body | `[`<br>`    {`<br>`        cartItemId : 장바구니 도서 id,`<br>`        bookId : 도서 id,`<br>`        title : “도서 제목”,`<br>`        summary : “도서 요약”,`<br>`        count : 수량,`<br>`         price : 가격`<br>`    },`<br>`    {`<br>`        id : 장바구니 도서 id,`<br>`        bookId : 도서 id,`<br>`        title : “도서 제목”,`<br>`        summary : “도서 요약”,`<br>`        count : 수량,`<br>`         price : 가격`<br>`    }`<br>`   , ...`<br>`]` |
 
+## 결제 (주문) API
+1. 결제하기 = 주문하기 = 주문 등록 = 데이터 베이스 주문 insert = 장바구니에서 주문된 상품은 delete
+
+| 내용 | 값 |
+| --- | --- |
+| Method | GET |
+| URI | /orders/{orderId} |
+| HTTP status code | 성공 200 |
+| Request Body | `{`<br>`    items : [{`<br>`        cartItemId : 장바구니 도서 id,`<br>`        bookId : 도서 id,`<br>`        count : 수량`<br>`    },`<br>`    {`<br>`        cartItemId : 장바구니 도서 id,`<br>`        bookId : 도서 id,`<br>`        count : 수량`<br>`    },`<br>`    ...],`<br>`    delivery : {`<br>`        address : "주소",`<br>`        receiver : "이름",`<br>`        contact : "010-0000-0000"`<br>`    },`<br>`    totalPrice : 총 금액`<br>`}`|
+| Response Body | |
+
+2. 주문 목록 (내역) 조회 
+
+| 내용 | 값 |
+| --- | --- |
+| Method | GET |
+| URI | /orders |
+| HTTP status code | 성공 200 |
+| Request Body | |
+| Response Body | `[`<br>`    {`<br>`        order_id : 장바구니 도서 id,`<br>`        created_at : “주문일자”,`<br>`        delivery : {`<br>`            address : "주소",`<br>`            receiver : "이름",`<br>`            contact : "010-0000-0000"`<br>`        },`<br>`        bookTitle : "대표 책 제목",`<br>`        totalPrice : 총 금액,`<br>`        totalPrice : 총 수량`<br>`    }`<br>`   , ...`<br>`]` |
+
+3. 주문 상세 상품 조회
+
+| 내용 | 값 |
+| --- | --- |
+| Method | GET |
+| URI | /orders/{orderId} |
+| HTTP status code | 성공 200 |
+| Request Body | `[`<br>`    {`<br>`        bookId : 도서 id,`<br>`        bookTitle : “도서 제목”,`<br>`        author : “작가명”,`<br>`         price : 가격,`<br>`        count : 수량,`<br>`    },`<br>`    {`<br>`        bookId : 도서 id,`<br>`        bookTitle : “도서 제목”,`<br>`        author : “작가명”,`<br>`         price : 가격,`<br>`        count : 수량,`<br>`    }`<br>`   , ...`<br>`]`|
+| Response Body | |
