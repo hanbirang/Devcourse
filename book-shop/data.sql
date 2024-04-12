@@ -12,3 +12,7 @@ VALUES ("흥부와 놀부들", "종이책", 3, "제비..", "까만 제비..", "�
 
 SELECT * FROM Bookshop.books LEFT
 JOIN Bookshop.category ON books.category_id = category.id;
+
+SELECT * FROM Bookshop.books LEFT
+JOIN Bookshop.category ON books.category_id = category.id
+WHERE books.id = 1;
