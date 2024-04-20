@@ -117,3 +117,9 @@ SELECT last_insert_id();
 
 /* 장바구니 삭제 */
 DELETE FROM cartItems WHERE id IN (1, 2, 3);
+
+/* 주문 목록 조회 */ 
+SELECT orders.id, book_title, total_quantity, total_price, created_at,
+address, receiver, contact
+FROM Bookshop.orders LEFT JOIN Bookshop.delivery
+ON orders.delivery_id = delivery.id;
