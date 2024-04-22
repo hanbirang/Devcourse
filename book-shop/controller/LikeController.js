@@ -29,10 +29,15 @@ const addLike = (req, res) => {
 const removeLike = (req, res) => {
     // 좋아요 제거 (취소)
     const {id} = req.params; // book_id
-    const {user_id} = req.body;
+
+    let receivedJwt = req.headers["authorization"];
+    console.log("received jwt : ", receivedJwt);
+
+    let decodedJwt = jwt.verify(receivedJwt, process.env.PRIVATE_KEY);
+    console.log(decodedJwt);
 
     let sql = `DELETE FROM Bookshop.likes WHERE user_id = ? AND liked_book_id = ?;`;
-    let values = [user_id, id];
+    let values = [decodedJwt.id, id];
 
     conn.query(sql, values,
         (err, results) => {
