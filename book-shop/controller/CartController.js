@@ -10,16 +10,26 @@ const addToCart = (req, res) => {
 
     let authorization = ensureAuthorization(req, res);
 
-    let sql = `INSERT INTO cartItems (book_id, quantity, user_id) VALUES(?, ?, ?);`;
-    let values = [book_id, quantity, authorization.id];
-    conn.query(sql, values,
-        (err, results) => {
-            if (err) {
-                console.log(err);
-                return res.status(StatusCodes.BAD_REQUEST).end();
-            }
-            return res.status(StatusCodes.OK).json(results);
-    });
+    if (authorization instanceof jwt.TokenExpiredError) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+            "message" : "로그인 세션이 만료되었습니다. 다시 로그인 하세요."
+        });
+    } else if (authorization instanceof jwt.JsonWebTokenError) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            "message" : "잘못된 토큰입니다."
+        });
+    } else {
+        let sql = `INSERT INTO cartItems (book_id, quantity, user_id) VALUES(?, ?, ?);`;
+        let values = [book_id, quantity, authorization.id];
+        conn.query(sql, values,
+            (err, results) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(StatusCodes.BAD_REQUEST).end();
+                }
+                return res.status(StatusCodes.OK).json(results);
+        });
+    }
 };
 
 // 장바구니 아이템 목록 조회 
@@ -31,6 +41,10 @@ const getCartItems = (req, res) => {
     if (authorization instanceof jwt.TokenExpiredError) {
         return res.status(StatusCodes.UNAUTHORIZED).json({
             "message" : "로그인 세션이 만료되었습니다. 다시 로그인 하세요."
+        });
+    } else if (authorization instanceof jwt.JsonWebTokenError) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            "message" : "잘못된 토큰입니다."
         });
     } else {
         let sql = `SELECT cartItems.id, book_id, title, summary, quantity, price
