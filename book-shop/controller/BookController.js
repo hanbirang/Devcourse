@@ -5,6 +5,8 @@ const {StatusCodes} = require('http-status-codes'); // status code 모듈
 
 // (카테고리 별, 신간 여부) 전체 도서 목록 조회 
 const allBooks = (req, res) => {
+    let allBooksRes = {};
+
     let {category_id, newBook, limit, currentPage } = req.query;
 
     // limit : page 당 도서 수       ex. 3
@@ -13,7 +15,8 @@ const allBooks = (req, res) => {
     //                              limit * (currentPage-1)
     
     let offset = limit * (currentPage-1);
-    let sql = `SELECT *, (SELECT count(*) FROM likes WHERE liked_book_id=books.id) AS likes FROM books`;
+
+    let sql = `SELECT SQL_CALC_FOUND_ROWS *, (SELECT count(*) FROM likes WHERE liked_book_id=books.id) AS likes FROM books`;
     let values = [];
 
     if (category_id && newBook) {
@@ -27,6 +30,7 @@ const allBooks = (req, res) => {
     else if (newBook) {
         sql += ` WHERE pub_date BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND NOW()`;
     }
+
     sql += ` LIMIT ? OFFSET ?`;
     values.push(parseInt(limit), offset);
     
@@ -34,13 +38,30 @@ const allBooks = (req, res) => {
         (err, results) => {
             if (err) {
                 console.log(err);
+                // return res.status(StatusCodes.BAD_REQUEST).end();
+            }
+            console.log(results);
+            if (results.length)
+                allBooksRes.books = results;
+            else 
+                return res.status(StatusCodes.NOT_FOUND).end();
+    });
+
+    sql = `SELECT found_rows();`;
+    conn.query(sql,
+        (err, results) => {
+            if (err) {
+                console.log(err);
                 return res.status(StatusCodes.BAD_REQUEST).end();
             }
 
-            if (results.length)
-                return res.status(StatusCodes.OK).json(results);
-            else 
-                return res.status(StatusCodes.NOT_FOUND).end();
+            let pagination = {};
+            pagination.currentPage = parseInt(currentPage);
+            pagination.totalCount = results[0]["found_rows()"];
+
+            allBooksRes.pagination = pagination;
+
+            return res.status(StatusCodes.OK).json(allBooksRes);
     });
 };
 
