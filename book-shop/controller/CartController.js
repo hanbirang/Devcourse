@@ -8,7 +8,7 @@ dotenv.config();
 const addToCart = (req, res) => {
     const {book_id, quantity} = req.body;
 
-    let authorization = ensureAuthorization(req);
+    let authorization = ensureAuthorization(req, res);
 
     let sql = `INSERT INTO cartItems (book_id, quantity, user_id) VALUES(?, ?, ?);`;
     let values = [book_id, quantity, authorization.id];
@@ -26,22 +26,28 @@ const addToCart = (req, res) => {
 const getCartItems = (req, res) => {
     const {selected} = req.body; // selected = [1, 3]
 
-    let authorization = ensureAuthorization(req);
+    let authorization = ensureAuthorization(req, res);
 
-    let sql = `SELECT cartItems.id, book_id, title, summary, quantity, price
+    if (authorization instanceof jwt.TokenExpiredError) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+            "message" : "로그인 세션이 만료되었습니다. 다시 로그인 하세요."
+        });
+    } else {
+        let sql = `SELECT cartItems.id, book_id, title, summary, quantity, price
                 FROM cartItems LEFT JOIN books
                 ON cartItems.book_id = books.id
                 WHERE user_id = ? AND cartItems.id IN (?)`;
-    let values = [authorization.id, selected];
+        let values = [authorization.id, selected];
 
-    conn.query(sql, values,
-        (err, results) => {
-            if (err) {
-                console.log(err);
-                return res.status(StatusCodes.BAD_REQUEST).end();
-            }
-            return res.status(StatusCodes.OK).json(results);
-    });
+        conn.query(sql, values,
+            (err, results) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(StatusCodes.BAD_REQUEST).end();
+                }
+                return res.status(StatusCodes.OK).json(results);
+        });
+    }
 };
 
 // 장바구니 아이템 삭제 
@@ -60,14 +66,21 @@ const removeCartItem = (req, res) => {
     });
 };
 
-function ensureAuthorization(req) {
-    let receivedJwt = req.headers["authorization"];
-    console.log("received jwt : ", receivedJwt);
+function ensureAuthorization(req, res) {
+    try {
+        let receivedJwt = req.headers["authorization"];
+        console.log("received jwt : ", receivedJwt);
 
-    let decodedJwt = jwt.verify(receivedJwt, process.env.PRIVATE_KEY);
-    console.log(decodedJwt);
+        let decodedJwt = jwt.verify(receivedJwt, process.env.PRIVATE_KEY);
+        console.log(decodedJwt);
 
-    return decodedJwt;
+        return decodedJwt;
+    } catch (err) {
+        console.log(err.name);
+        console.log(err.message);
+
+        return err;
+    }
 }
 
 module.exports = {
