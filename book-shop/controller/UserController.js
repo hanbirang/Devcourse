@@ -3,6 +3,7 @@ const {StatusCodes} = require('http-status-codes'); // status code 모듈
 const jwt = require('jsonwebtoken'); // jwt 모듈
 const crypto = require('crypto'); // crypto 모듈 : 암호화
 const dotenv = require('dotenv'); // dotenv 모듈
+const { STATUS_CODES } = require('http');
 dotenv.config();
 
 const join = (req, res) => {
@@ -21,7 +22,11 @@ const join = (req, res) => {
                 console.log(err);
                 return res.status(StatusCodes.BAD_REQUEST).end();
             }
-            return res.status(StatusCodes.CREATED).json(results);
+
+            if (results.affectedRows)
+                return res.status(StatusCodes.CREATED).json(results);
+            else 
+                return res.status(STATUS_CODES.BAD_REQUEST).end();
         });
 };
 
@@ -45,6 +50,7 @@ const login = (req, res) => {
             if (loginUser && loginUser.password == hashPassword) {
                 // 토큰 발행 
                 const token = jwt.sign({
+                    id : loginUser.id,
                     email : loginUser.email
                 }, process.env.PRIVATE_KEY, {
                     expiresIn : '5m',
