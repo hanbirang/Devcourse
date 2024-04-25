@@ -3,14 +3,18 @@ const jwt = require('jsonwebtoken');
 const mariadb = require('mysql2/promise');
 const {StatusCodes} = require('http-status-codes'); // status code 모듈
 
-const order = async (req, res) => {
-    const conn = await mariadb.createConnection({
+const getConnection = async () => {
+    return await mariadb.createConnection({
         host: 'localhost',
         user: 'root',
         password: 'root', 
         database: 'Bookshop',
         dateStrings: true
     });
+}
+
+const order = async (req, res) => {
+    const conn = await getConnection();
 
     let authorization = ensureAuthorization(req, res);
 
@@ -80,13 +84,7 @@ const getOrders = async (req, res) => {
             "message" : "잘못된 토큰입니다."
         });
     } else {
-        const conn = await mariadb.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: 'root', 
-            database: 'Bookshop',
-            dateStrings: true
-        });
+        const conn = await getConnection();
         let sql = `SELECT orders.id, created_at, address, receiver, contact, 
                     book_title, total_quantity, total_price
                     FROM orders LEFT JOIN delivery
@@ -110,13 +108,7 @@ const getOrderDetail = async (req, res) => {
         });
     } else {
         const order_id = req.params.id;
-        const conn = await mariadb.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: 'root', 
-            database: 'Bookshop',
-            dateStrings: true
-        });
+        const conn = await getConnection();
         let sql = `SELECT book_id, title, author, price, quantity
                     FROM orderedBook LEFT JOIN books
                     ON orderedBook.book_id = books.id
