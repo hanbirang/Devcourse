@@ -8,11 +8,6 @@ const allBooks = (req, res) => {
     let allBooksRes = {};
 
     let {category_id, newBook, limit, currentPage } = req.query;
-
-    // limit : page 당 도서 수       ex. 3
-    // currentPage : 현재 몇 페이지  ex. 1, 2, 3 ...
-    // offset :                         0, 3, 6, 9, 12 ...
-    //                              limit * (currentPage-1)
     
     let offset = limit * (currentPage-1);
 
