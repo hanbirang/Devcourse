@@ -15,7 +15,19 @@ function getInfo(id) {
         completed: true
     };
 }
-console.log(getInfo(1111));
+var std = {
+    stdId: 960615,
+    stdName: 'hoshi',
+    age: 29,
+    gender: 'male',
+    course: 'node.js',
+    completed: true
+};
+function setInfo(student) {
+    console.log(student);
+}
+setInfo(std);
+// console.log(getInfo(1111));
 // 함수의 데이터 타입 명시 (매개변수, 리턴타입)
 // function Plus(a : number, b? : number) : number {
 //     return a + b;
