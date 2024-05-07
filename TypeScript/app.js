@@ -7,4 +7,4 @@ var student = {
   }
 };
 student.name = 'lim';
-student.name = 1;
+// student.name = 1; 에러 발생 
