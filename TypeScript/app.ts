@@ -8,24 +8,43 @@ let completed : boolean = false;
 
 interface Student {
     stdId : number;
-    stdName : string;
+    stdName? : string;
     age? : number;  // 선택적 프로퍼티 
-    gender : string; 
-    course : string;
-    completed : boolean;
+    gender? : string; 
+    course? : string;
+    completed? : boolean;
+    // setName(name : string) : void;
+    setName : (name : string) => void;
+    // getName : () => string;
 }
 
-function getInfo(id : number) : Student
-{
-    return {
-        stdId : id,
-        stdName : 'lim',
-        // age : 23,
-        gender : 'female', 
-        course : 'JavaScript',
-        completed : true
-    };
+class MyStudent implements Student {
+    stdId = 960615;
+    stdName = 'hoshi';
+    age = 29;
+    gender = 'male'; 
+    course = 'node.js';
+    completed = true;
+
+    setName(name : string) : void { // 오버라이딩 
+        this.stdName = name;
+        console.log('이름 설정 : ' + this.stdName);
+    }
 }
+const myInstance = new MyStudent();
+myInstance.setName('호시');
+
+// function getInfo(id : number) : Student
+// {
+//     return {
+//         stdId : id,
+//         stdName : 'lim',
+//         // age : 23,
+//         gender : 'female', 
+//         course : 'JavaScript',
+//         completed : true
+//     };
+// }
 
 let std = {
     stdId : 960615,
@@ -41,7 +60,7 @@ function setInfo(student : Student) : void
     console.log(student);
 }
 
-setInfo(std);
+// setInfo(std);
 
 // console.log(getInfo(1111));
 
