@@ -1,5 +1,3 @@
-function logName(name : string) {
-    console.log(name);
-} 
-
-logName('lhb');
+let myname = 'lhb';
+myname = 'lim'; // 타입 추론
+// myname = 1; 에러 발생 
