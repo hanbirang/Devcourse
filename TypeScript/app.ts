@@ -6,23 +6,30 @@ let gender : string = 'female';
 let course : string = 'TypeScript';
 let completed : boolean = false;
 
+// 열거형 : 사용자 정의 타입
+enum GenderType {
+    Male = 'male',
+    Female = 'female',
+    GenderNeutral = 'neutral'
+};
+
 interface Student {
     stdId : number;
     stdName? : string;
     age? : number;  // 선택적 프로퍼티 
-    gender? : string; 
+    gender? : GenderType; 
     course? : string;
     completed? : boolean;
     // setName(name : string) : void;
-    setName : (name : string) => void;
-    // getName : () => string;
+    setName? : (name : string) => void;
+    getName? : () => string;
 }
 
 class MyStudent implements Student {
     stdId = 960615;
     stdName = 'hoshi';
     age = 29;
-    gender = 'male'; 
+    gender = GenderType.Male; 
     course = 'node.js';
     completed = true;
 
@@ -34,23 +41,23 @@ class MyStudent implements Student {
 const myInstance = new MyStudent();
 myInstance.setName('호시');
 
-// function getInfo(id : number) : Student
-// {
-//     return {
-//         stdId : id,
-//         stdName : 'lim',
-//         // age : 23,
-//         gender : 'female', 
-//         course : 'JavaScript',
-//         completed : true
-//     };
-// }
+function getInfo(id : number) : Student
+{
+    return {
+        stdId : id,
+        stdName : 'lim',
+        // age : 23,
+        gender : GenderType.Female, 
+        course : 'JavaScript',
+        completed : true
+    };
+}
 
 let std = {
     stdId : 960615,
     stdName : 'hoshi',
     age : 29,
-    gender : 'male', 
+    gender : GenderType.Male, 
     course : 'node.js',
     completed : true
 };
