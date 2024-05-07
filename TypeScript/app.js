@@ -6,9 +6,16 @@ var gender = 'female';
 var course = 'TypeScript';
 var completed = false;
 function getInfo(id) {
-    return null;
+    return {
+        stdId: id,
+        stdName: 'lim',
+        age: 23,
+        gender: 'female',
+        course: 'JavaScript',
+        completed: true
+    };
 }
-// 반환되는 객체의 구조를 타입으로 지정 
+console.log(getInfo(1111));
 // 함수의 데이터 타입 명시 (매개변수, 리턴타입)
 // function Plus(a : number, b : number) : number {
 //     return a + b;
