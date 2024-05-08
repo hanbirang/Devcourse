@@ -18,7 +18,7 @@ var MyStudent = /** @class */ (function () {
         this.stdId = 960615;
         this.stdName = 'hoshi';
         this.age = 29;
-        this.gender = GenderType.Male;
+        this.gender = 'male';
         this.course = 'node.js';
         this.completed = true;
     }
@@ -35,7 +35,7 @@ function getInfo(id) {
         stdId: id,
         stdName: 'lim',
         // age : 23,
-        gender: GenderType.Female,
+        gender: 'female',
         course: 'JavaScript',
         completed: true
     };
@@ -44,7 +44,7 @@ var std = {
     stdId: 960615,
     stdName: 'hoshi',
     age: 29,
-    gender: GenderType.Male,
+    gender: 'male',
     course: 'node.js',
     completed: true
 };
@@ -58,3 +58,7 @@ function setInfo(student) {
 //     return a + b;
 // }
 // 만약 반환 값이 없으면 void 사용 
+var user = {
+    name: 'hanbirang',
+    age: 23
+};
