@@ -77,10 +77,10 @@ function setInfo(student : Student) : void
 // }
 // 만약 반환 값이 없으면 void 사용 
 
-const user : { name : string, age : number }= {
-    name : 'hanbirang',
-    age : 23
-};
+// const user : { name : string, age : number }= {
+//     name : 'hanbirang',
+//     age : 23
+// };
 
 type strOrNum = number | string;
 
@@ -103,3 +103,48 @@ function convertToNumber(val : strOrNum) : number {
 
 console.log(convertToString(numStr));   // 문자열 100
 console.log(convertToNumber(numStr));   // 숫자 100
+
+let numbers : number[] = [1, 2, 3, 4, 5];
+
+let fruits : string[] = ['apple', 'banana', 'orange'];
+
+for(let i = 0; i < numbers.length; i++) {
+    console.log(numbers[i]);
+}
+
+for(let i = 0; i < fruits.length; i++) {
+    console.log(fruits[i]);
+}
+
+// 배열의 유니온 타입 
+let mixedArray : (number | string)[] = [1, 'two', 3, 'four'];
+
+for (let i = 0; i < mixedArray.length; i++) {
+    console.log(mixedArray[i]);
+}
+
+let infer = [1, 2, 3];  // 타입 추론 
+
+for (let i = 0; i < infer.length; i++) {
+    console.log(infer[i]);
+}
+
+let readOnlyArray : ReadonlyArray<number> = [1, 2, 3];  // 읽기 전용, 수정 불가 
+
+// 튜플 (자바스크립트에서는 없는 데이터 타입) : 타입의 순서가 정해져있다.
+let greeting : [number, string, boolean] = [1, 'hello', true];
+
+for (let i = 0; i < greeting.length; i++) {
+        console.log(greeting[i]);
+}
+
+// Spread 연산자
+
+let firstArray = [1, 2, 3];
+let secondArray = [4, 5, 6];
+
+let combineArray = [...firstArray, ...secondArray]; // ... : spread 연산자 - 괄호를 벗겨주는 역할을 함 
+
+for (let i = 0; i < combineArray.length; i++) {
+    console.log(combineArray[i]);
+}
