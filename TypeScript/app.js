@@ -1,3 +1,12 @@
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 // 변수의 데이터 타입 명시
 var stdId = 625;
 var stdName = 'lhb';
@@ -51,17 +60,6 @@ var std = {
 function setInfo(student) {
     console.log(student);
 }
-// setInfo(std);
-// console.log(getInfo(1111));
-// 함수의 데이터 타입 명시 (매개변수, 리턴타입)
-// function Plus(a : number, b? : number) : number {
-//     return a + b;
-// }
-// 만약 반환 값이 없으면 void 사용 
-var user = {
-    name: 'hanbirang',
-    age: 23
-};
 var numStr = '100';
 var item;
 function convertToString(val) {
@@ -78,3 +76,33 @@ function convertToNumber(val) {
 }
 console.log(convertToString(numStr)); // 문자열 100
 console.log(convertToNumber(numStr)); // 숫자 100
+var numbers = [1, 2, 3, 4, 5];
+var fruits = ['apple', 'banana', 'orange'];
+for (var i = 0; i < numbers.length; i++) {
+    console.log(numbers[i]);
+}
+for (var i = 0; i < fruits.length; i++) {
+    console.log(fruits[i]);
+}
+// 배열의 유니온 타입 
+var mixedArray = [1, 'two', 3, 'four'];
+for (var i = 0; i < mixedArray.length; i++) {
+    console.log(mixedArray[i]);
+}
+var infer = [1, 2, 3]; // 타입 추론 
+for (var i = 0; i < infer.length; i++) {
+    console.log(infer[i]);
+}
+var readOnlyArray = [1, 2, 3]; // 읽기 전용, 수정 불가 
+// 튜플 (자바스크립트에서는 없는 데이터 타입) : 타입의 순서가 정해져있다.
+var greeting = [1, 'hello', true];
+for (var i = 0; i < greeting.length; i++) {
+    console.log(greeting[i]);
+}
+// Spread 연산자
+var firstArray = [1, 2, 3];
+var secondArray = [4, 5, 6];
+var combineArray = __spreadArray(__spreadArray([], firstArray, true), secondArray, true); // ... : spread 연산자 - 괄호를 벗겨주는 역할을 함 
+for (var i = 0; i < combineArray.length; i++) {
+    console.log(combineArray[i]);
+}
