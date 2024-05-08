@@ -81,3 +81,25 @@ const user : { name : string, age : number }= {
     name : 'hanbirang',
     age : 23
 };
+
+type strOrNum = number | string;
+
+let numStr : strOrNum = '100';
+let item : number;
+
+function convertToString(val : strOrNum) : string {
+    // item = numStr; 에러 : 큰 범위에서 작은 범위에 대입하는 것은 옳지 않음 
+    // typeof operator 
+    if (typeof val === "string")
+        item = 0;
+    else 
+        item = val;
+    return String(val); // val이라는 값을 string으로 변환시켜서 return함 
+} 
+
+function convertToNumber(val : strOrNum) : number {
+    return Number(val); // val이라는 값을 숫자로 변환시켜서 return함 
+} 
+
+console.log(convertToString(numStr));   // 문자열 100
+console.log(convertToNumber(numStr));   // 숫자 100
