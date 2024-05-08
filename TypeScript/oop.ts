@@ -2,9 +2,9 @@
 // 멤버 함수 == 메소드 
 
 class Employee {
-    empName : string;
-    age : number;
-    empJob : string;
+    private empName : string;
+    private age : number;
+    private empJob : string;
 
     constructor(empName : string, age? : number, empJob? : string) {
         this.empName = empName;
@@ -17,5 +17,8 @@ class Employee {
     }
 }
 
+// public private protected : 데이터 접근을 제한하기 위해 사용 
+
 let employee1 = new Employee('lim', 21, 'developer');
+// employee1.empName = 'hanbi';
 employee1.printEmp();
