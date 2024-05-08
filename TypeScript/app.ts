@@ -17,7 +17,7 @@ interface Student {
     stdId : number;
     stdName? : string;
     age? : number;  // 선택적 프로퍼티 
-    gender? : GenderType; 
+    gender? : 'male' | 'female'; 
     course? : string;
     completed? : boolean;
     // setName(name : string) : void;
@@ -29,7 +29,7 @@ class MyStudent implements Student {
     stdId = 960615;
     stdName = 'hoshi';
     age = 29;
-    gender = GenderType.Male; 
+    gender : 'male' | 'female' = 'male'; 
     course = 'node.js';
     completed = true;
 
@@ -47,7 +47,7 @@ function getInfo(id : number) : Student
         stdId : id,
         stdName : 'lim',
         // age : 23,
-        gender : GenderType.Female, 
+        gender : 'female', 
         course : 'JavaScript',
         completed : true
     };
@@ -57,7 +57,7 @@ let std = {
     stdId : 960615,
     stdName : 'hoshi',
     age : 29,
-    gender : GenderType.Male, 
+    gender : 'male', 
     course : 'node.js',
     completed : true
 };
@@ -76,3 +76,8 @@ function setInfo(student : Student) : void
 //     return a + b;
 // }
 // 만약 반환 값이 없으면 void 사용 
+
+const user : { name : string, age : number }= {
+    name : 'hanbirang',
+    age : 23
+};
