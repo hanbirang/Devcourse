@@ -12,5 +12,7 @@ var Employee = /** @class */ (function () {
     }
     return Employee;
 }());
+// public private protected : 데이터 접근을 제한하기 위해 사용 
 var employee1 = new Employee('lim', 21, 'developer');
+// employee1.empName = 'hanbi';
 employee1.printEmp();
