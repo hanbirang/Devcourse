@@ -2,22 +2,28 @@
 // 멤버 함수 == 메소드 
 
 class Employee {
-    private empName : string;
-    private age : number;
-    private empJob : string;
+    private _empName : string;
+    private _age : number;
+    private _empJob : string;
 
-    constructor(empName : string, age? : number, empJob? : string) {
-        this.empName = empName;
-        this.age = age;
-        this.empJob = empJob;
+    constructor(empName : string, age : number, empJob : string) {
+        this._empName = empName;
+        this._age = age;
+        this._empJob = empJob;
+    }
+
+    // get / set
+    get empName() {
+        return this._empName;
+    }
+    set empName(val : string) {
+        this._empName = val;
     }
 
     printEmp = () : void => {
-        console.log(`${this.empName}의 나이는 ${this.age}이고, 직업은 ${this.empJob}입니다.`);
+        console.log(`${this._empName}의 나이는 ${this._age}이고, 직업은 ${this._empJob}입니다.`);
     }
 }
-
-// public private protected : 데이터 접근을 제한하기 위해 사용 
 
 let employee1 = new Employee('lim', 21, 'developer');
 // employee1.empName = 'hanbi';
