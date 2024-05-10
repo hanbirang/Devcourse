@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 
+type Todo = {
+    id : number;
+    text : string;
+    isChecked : boolean;
+};
+
 const TodoList : React.FC = () => {
     const title : string = "오늘 할 일";
 
     // 구조 분해 할당 
-    const [todos, setTodos] = useState<string[]>(['공부하기', '잠자기', '미팅하기']);
+    const [todos, setTodos] = useState<Todo[]>([
+        {id : 1, text : '공부하기', isChecked : false},
+        {id : 2, text : '잠자기', isChecked : false},
+        {id : 3, text : '미팅하기', isChecked : false}
+    ]);
+
     return(
         <div>
             <h1>{title}</h1>
@@ -12,9 +23,11 @@ const TodoList : React.FC = () => {
             <div className='container'>
                 <div className='board'>
                     <ul>
-                        <li>{todos[0]}</li>
-                        <li>{todos[1]}</li>
-                        <li>{todos[2]}</li>
+                        {
+                            todos.map((todo, index) => (
+                                <li key={index}>{todo.text}</li>
+                            ))
+                        }
                     </ul>
                 </div>
             </div>
