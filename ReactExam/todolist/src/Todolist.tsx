@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 const TodoList : React.FC = () => {
     const title : string = "오늘 할 일";
-    const [todos] = useState(['공부하기', '잠자기', '미팅하기']);
+
+    // 구조 분해 할당 
+    const [todos, setTodos] = useState<string[]>(['공부하기', '잠자기', '미팅하기']);
     return(
         <div>
             <h1>{title}</h1>
