@@ -10,11 +10,13 @@ const TodoList : React.FC = () => {
             <h1>{title}</h1>
             <p></p>
             <div className='container'>
-                <ul>
-                    <li>{todos[0]}</li>
-                    <li>{todos[1]}</li>
-                    <li>{todos[2]}</li>
-                </ul>
+                <div className='board'>
+                    <ul>
+                        <li>{todos[0]}</li>
+                        <li>{todos[1]}</li>
+                        <li>{todos[2]}</li>
+                    </ul>
+                </div>
             </div>
         </div>
     );
