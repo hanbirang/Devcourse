@@ -9,8 +9,8 @@ function App() {
   return (
     <div className="container">
       <TodoList />
-      <Clock />
-      <MyWeather weather='맑음'/>
+      {/* <Clock /> */}
+      <MyWeather weather='맑음'>일기예보</MyWeather>
     </div>
   );
 }
