@@ -5,11 +5,11 @@ interface MyProps {
     children : React.ReactNode;
 }
 
-const MyWeather : React.FC<MyProps> = (props) => {
+const MyWeather : React.FC<MyProps> = ({children, weather}) => {
     return (
         <div>
-            {props.children}<p />
-            오늘의 날씨는 {props.weather} 입니다. 
+            {children}<p />
+            오늘의 날씨는 {weather} 입니다. 
         </div>
     )
 }
