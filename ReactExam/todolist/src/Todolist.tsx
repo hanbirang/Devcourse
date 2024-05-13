@@ -33,6 +33,9 @@ const TodoList : React.FC = () => {
             setNewTodo('');
         }
     }
+    const removeTodo = (id : number) => {
+        setTodos(todos.filter((todo)=> todo.id !== id))
+    }
 
     return(
         <div>
@@ -68,6 +71,10 @@ const TodoList : React.FC = () => {
                                             : <span>{todo.text}</span>
                                         } 
                                     </span>
+                                    <button
+                                        onClick={()=> removeTodo(todo.id)}
+                                        className='delbutton'
+                                    >삭제</button>
                                 </li>
                             ))
                         }
