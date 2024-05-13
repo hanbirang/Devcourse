@@ -18,6 +18,7 @@ const TodoList : React.FC = () => {
         {id : 3, text : '미팅하기', isChecked : false}
     ]);
     
+    const [newTodo, setNewTodo] = useState<string>('');
 
     const handleCheckedChange = (itemId : number) => {
         setTodos((prevItems) => 
@@ -25,6 +26,12 @@ const TodoList : React.FC = () => {
                 item.id === itemId ? {...item, isChecked : !item.isChecked } : item
             )
         )
+    }
+    const addTodo = () => {
+        if (newTodo.trim() !== '') {
+            setTodos([...todos, { id : Date.now(), text : newTodo, isChecked:false}]);
+            setNewTodo('');
+        }
     }
 
     return(
@@ -39,8 +46,10 @@ const TodoList : React.FC = () => {
                             marginRight : '10px',
                             writingMode : 'horizontal-tb'
                         }}
+                        value = {newTodo}
+                        onChange={(e)=> setNewTodo(e.target.value)}
                     />
-                    <Button variant='warning'>추가</Button>
+                    <Button variant='warning' onClick={addTodo}>추가</Button>
                 </div>
                 <p />
                 <div className='board'>
