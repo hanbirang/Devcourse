@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
+
 
 type Todo = {
     id : number;
@@ -15,6 +17,7 @@ const TodoList : React.FC = () => {
         {id : 2, text : '잠자기', isChecked : false},
         {id : 3, text : '미팅하기', isChecked : false}
     ]);
+    
 
     const handleCheckedChange = (itemId : number) => {
         setTodos((prevItems) => 
@@ -37,7 +40,7 @@ const TodoList : React.FC = () => {
                             writingMode : 'horizontal-tb'
                         }}
                     />
-                    <button>추가</button>
+                    <Button variant='warning'>추가</Button>
                 </div>
                 <p />
                 <div className='board'>
