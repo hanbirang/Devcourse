@@ -27,8 +27,19 @@ const TodoList : React.FC = () => {
     return(
         <div>
             <h1>{title}</h1>
-            <p></p>
+            <p />
             <div className='container'>
+                <div>
+                    <input type='text'
+                        placeholder='할 일 입력'
+                        style={{
+                            marginRight : '10px',
+                            writingMode : 'horizontal-tb'
+                        }}
+                    />
+                    <button>추가</button>
+                </div>
+                <p />
                 <div className='board'>
                     <ul>
                         {
