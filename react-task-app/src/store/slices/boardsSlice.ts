@@ -68,20 +68,24 @@ const boardsSlice = createSlice({
         deleteList: (state, {payload}: PayloadAction<TDeleteListAction>) => {
             state.boardArray = state.boardArray.map(
                 board =>
-                board.boardId === payload.boardId
-                ?
-                {
-                    ...board,
-                    lists: board.lists.filter(
-                        list => list.listId!== payload.listId
-                    )
-                }
-                :
-                board
+                    board.boardId === payload.boardId
+                        ?
+                        {
+                            ...board,
+                            lists: board.lists.filter(
+                                list => list.listId!== payload.listId
+                            )
+                        }
+                        :
+                        board
             )
+        },
+
+        setModalActive: (state, {payload} : PayloadAction<boolean>) => {
+            state.modalActive = payload;
         }
     }
 });
 
-export const {addBoard, deleteList} = boardsSlice.actions;
+export const {addBoard, deleteList, setModalActive} = boardsSlice.actions;
 export const boardsReducer = boardsSlice.reducer;
