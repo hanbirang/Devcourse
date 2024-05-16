@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { IList } from '../../types';
 import List from '../List/List';
 import ActionButton from '../ActionButton/ActionButton';
+import { listsContainer } from './ListsContainer.css';
 
 type TListsContainerProps = {
   boardId: string;
@@ -13,7 +14,7 @@ const ListsContainer : FC<TListsContainerProps> = ({
   boardId
 }) => {
   return (
-    <div>
+    <div className={listsContainer}>
       {
         lists.map(list => (
           <List 
