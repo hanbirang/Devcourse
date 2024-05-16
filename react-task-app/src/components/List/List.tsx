@@ -2,11 +2,12 @@ import React, { FC } from 'react'
 import { GrSubtract } from 'react-icons/gr'
 import Task from '../Task/Task'
 import ActionButton from '../ActionButton/ActionButton'
-import { IList } from '../../types'
+import { IList, ITask } from '../../types'
 import { useTypedDispatch } from '../../hooks/redux'
-import { deleteList } from '../../store/slices/boardsSlice'
+import { deleteList, setModalActive } from '../../store/slices/boardsSlice'
 import { addLog } from '../../store/slices/loggerSlice'
 import { v4 } from 'uuid'
+import { setModalData } from '../../store/slices/modalSlice'
 
 type TListProps = {
   boardId: string;
@@ -31,6 +32,16 @@ const List: FC<TListProps> = ({
     )
   }
 
+  const handleTaskChange = (
+    boardId: string,
+    listId: string,
+    taskId: string,
+    task: ITask
+  ) => {
+    dispatch(setModalData({boardId, listId, task}));
+    dispatch(setModalActive(true));
+  }
+
   return (
     <div>
       <div>
@@ -41,6 +52,7 @@ const List: FC<TListProps> = ({
       </div>
       {list.tasks.map((task, index) => (
         <div
+          onClick={() => handleTaskChange(boardId, list.listId, task.taskId, task)}
           key={task.taskId}
         >
           <Task 
