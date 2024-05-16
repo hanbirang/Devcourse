@@ -4,6 +4,7 @@ import { icon, input, sideForm } from './SideForm.css';
 import { useTypedDispatch } from '../../../hooks/redux';
 import { addBoard } from '../../../store/slices/boardsSlice';
 import { v4 as uuidv4 } from 'uuid';
+import { addLog } from '../../../store/slices/loggerSlice';
 
 type TSideFormProps = {
   inputRef : React.RefObject<HTMLInputElement>;
@@ -36,6 +37,15 @@ const SideForm :FC<TSideFormProps> = ({
           }
         })
       )
+
+      dispatch(
+        addLog({
+          logId: uuidv4(),
+          logMessage: `게시판 등록: ${inputText}`,
+          logAuthor: "User",
+          logTimestamp: String(Date.now())
+        })
+      )
     }
   }
 
@@ -51,7 +61,7 @@ const SideForm :FC<TSideFormProps> = ({
         onChange={handleChange}
         onBlur={handleOnBlur}
       />
-      <FiCheck className={icon} onClick={handleClick}/>
+      <FiCheck className={icon} onMouseDown={handleClick} />
     </div>
   )
 }
