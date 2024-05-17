@@ -19,12 +19,18 @@ type TAddListAction = {
     boardId: string;
     list: IList;
 }
+
 type TAddTaskAction = {
     boardId: string;
     listId: string;
     task: ITask;
 }
 
+type TDeleteTaskAction = {
+    boardId: string;
+    listId: string;
+    taskId: string;
+}
 
 const initialState : TBoardsState = {
     modalActive : false,
@@ -103,6 +109,50 @@ const boardsSlice = createSlice({
                     : board
             )
         },
+
+        updateTask: (state, {payload}: PayloadAction<TAddTaskAction>) => {
+            state.boardArray = state.boardArray.map(board => 
+                board.boardId === payload.boardId
+                   ?
+                    {
+                       ...board,
+                        lists: board.lists.map(list =>
+                            list.listId === payload.listId
+                               ? {
+                                   ...list,
+                                    tasks: list.tasks.map(task =>
+                                        task.taskId === payload.task.taskId
+                                            ? payload.task
+                                            : task
+                                    )
+                                }
+                                : list
+                        )
+                    }
+                    : board
+            )
+        },
+
+        deleteTask: (state, {payload}: PayloadAction<TDeleteTaskAction>) => {
+            state.boardArray = state.boardArray.map(board =>
+                board.boardId === payload.boardId
+                   ?
+                    {
+                       ...board,
+                        lists: board.lists.map(list =>
+                            list.listId === payload.listId
+                               ? {
+                                   ...list,
+                                    tasks: list.tasks.filter(
+                                        task => task.taskId !== payload.taskId
+                                    )
+                                }
+                                : list
+                        )
+                    }
+                    : board
+            )
+        },
         
         deleteList: (state, {payload}: PayloadAction<TDeleteListAction>) => {
             state.boardArray = state.boardArray.map(
@@ -126,5 +176,5 @@ const boardsSlice = createSlice({
     }
 });
 
-export const {addBoard, deleteList, setModalActive, addTask, addList} = boardsSlice.actions;
+export const {addBoard, deleteList, deleteTask, updateTask, setModalActive, addTask, addList} = boardsSlice.actions;
 export const boardsReducer = boardsSlice.reducer;
