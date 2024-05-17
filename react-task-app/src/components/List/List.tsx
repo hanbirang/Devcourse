@@ -28,7 +28,7 @@ const List: FC<TListProps> = ({
         logId: v4(),
         logMessage: `리스트 삭제하기: ${list.listName}`,
         logAuthor: "User",
-        logTimestamp: String(new Date())
+        logTimestamp: String(Date.now()),
       })
     )
   }
