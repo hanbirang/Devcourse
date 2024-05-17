@@ -37,11 +37,11 @@ const BoardList: FC<TBoardListProps> = ({
             clsx(
               {
                 [boardItemActive]:
-                boardArray.findIndex(b =>board.boardId === activeBoardId) === index
+                boardArray.findIndex(b =>b.boardId === activeBoardId) === index
               },
               {
                 [boardItem] : 
-                boardArray.findIndex(b =>board.boardId === activeBoardId)!== index
+                boardArray.findIndex(b =>b.boardId === activeBoardId)!== index
               }
             )
           }
