@@ -1,5 +1,9 @@
 import React, { ChangeEvent, FC, useState } from 'react'
 import { FiX } from 'react-icons/fi';
+import { useTypedDispatch } from '../../../hooks/redux';
+import { v4 } from 'uuid';
+import { addList, addTask } from '../../../store/slices/boardsSlice';
+import { addLog } from '../../../store/slices/loggerSlice';
 
 type TDropDownFormProps = {
   boardId: string;
@@ -14,6 +18,7 @@ const DropDownForm: FC<TDropDownFormProps> = ({
   listId,
   setIsFormOpen
 }) => {
+  const dispatch = useTypedDispatch();
   const [text, setText] = useState('');
   const formPlaceholder = list ? 
       "리스트의 제목을 입력하세요." : 
@@ -27,6 +32,54 @@ const DropDownForm: FC<TDropDownFormProps> = ({
     setText(e.target.value);
   }
 
+  const handleButtonClick = () => {
+    if (text) {
+      if (list) {
+        dispatch(
+          addList({
+            boardId,
+            list: {
+              listId: v4(),
+              listName: text,
+              tasks: []
+            }
+          })
+        );
+
+        dispatch(
+          addLog({
+            logId: v4(),
+            logMessage: `리스트 생성하기: ${text}`,
+            logAuthor: "User",
+            logTimestamp: String(Date.now()),
+          })
+        );
+      } else {
+        dispatch(
+          addTask({
+            boardId,
+            listId,
+            task: {
+              taskId: v4(),
+              taskName: text,
+              taskDescription: "",
+              taskOwner: "User"
+            }
+          })
+        );
+
+        dispatch(
+          addLog({
+            logId: v4(),
+            logMessage: `일 생성하기: ${text}`,
+            logAuthor: "User",
+            logTimestamp: String(Date.now()),
+          })
+        );
+      }
+    }
+  }
+
   return (
     <div>
       <textarea 
@@ -37,7 +90,7 @@ const DropDownForm: FC<TDropDownFormProps> = ({
         onBlur={() => setIsFormOpen(false)}
       />
       <div>
-        <button>
+        <button onMouseDown={handleButtonClick}>
           {buttonTitle}
         </button>
         <FiX />
