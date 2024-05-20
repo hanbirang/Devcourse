@@ -5,9 +5,9 @@ import { FiLogIn, FiPlusCircle } from 'react-icons/fi';
 import { addButton, addSection, boardItem, boardItemActive, container, title } from './BoardList.css';
 import clsx from 'clsx';
 import { GoSignOut } from 'react-icons/go';
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
 import { app } from '../../firebase';
-import { setUser } from '../../store/slices/userSlice';
+import { removeUser, setUser } from '../../store/slices/userSlice';
 import { useAuth } from '../../hooks/useAuth';
 
 type TBoardListProps = {
@@ -31,18 +31,18 @@ const BoardList: FC<TBoardListProps> = ({
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)
-    .then(userCredential => {
-      console.log(userCredential);
-      dispatch(
-        setUser({
-          email: userCredential.user.email,
-          id: userCredential.user.uid
-        })
-      )
-    })
-    .catch(error => {
-      console.log(error);
-    })
+      .then(userCredential => {
+        console.log(userCredential);
+        dispatch(
+          setUser({
+            email: userCredential.user.email,
+            id: userCredential.user.uid
+          })
+        )
+      })
+      .catch(error => {
+        console.error(error);
+      })
   }
 
   const handleClick = () => {
@@ -50,6 +50,18 @@ const BoardList: FC<TBoardListProps> = ({
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
+  }
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch(
+          removeUser()
+        )
+      })
+      .catch((error) => {
+        console.error(error);
+      })
   }
 
   return (
@@ -89,7 +101,7 @@ const BoardList: FC<TBoardListProps> = ({
         {
           isAuth
           ?
-          <GoSignOut className={addButton}/>
+          <GoSignOut className={addButton} onClick={handleSignOut}/>
           :
           <FiLogIn className={addButton} onClick={handleLogin}/>
         }
