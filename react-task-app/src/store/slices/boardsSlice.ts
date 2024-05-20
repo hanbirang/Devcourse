@@ -194,6 +194,20 @@ const boardsSlice = createSlice({
         },
 
         sort: (state, {payload}: PayloadAction<TSortAction>) => {
+            // same list
+            if (payload.droppableIdStart === payload.droppableIdEnd) {
+                const list = state.boardArray[payload.boardIndex].lists.find(
+                    list => list.listId === payload.droppableIdStart
+                )
+
+                // 변경시키는 아이템을 배열에서 지워줌 
+                // return 값으로 지워진 아이템을 잡아줌 
+                const card = list?.tasks.splice(payload.droppableIndexStart, 1);
+                list?.tasks.splice(payload.droppableIndexEnd, 0, ...card!);
+            } else {
+                // other list 
+
+            }
 
         }
     }
