@@ -204,9 +204,19 @@ const boardsSlice = createSlice({
                 // return 값으로 지워진 아이템을 잡아줌 
                 const card = list?.tasks.splice(payload.droppableIndexStart, 1);
                 list?.tasks.splice(payload.droppableIndexEnd, 0, ...card!);
-            } else {
-                // other list 
+            }
 
+            // other list 
+            if(payload.droppableIdStart !== payload.droppableIdEnd) {
+                const listStart = state.boardArray[payload.boardIndex].lists.find(
+                    list => list.listId === payload.droppableIdStart
+                )
+
+                const card = listStart!.tasks.splice(payload.droppableIndexStart, 1);
+                const listEnd = state.boardArray[payload.boardIndex].lists.find(
+                    list => list.listId === payload.droppableIdEnd
+                )
+                listEnd?.tasks.splice(payload.droppableIndexEnd, 0, ...card);
             }
 
         }
