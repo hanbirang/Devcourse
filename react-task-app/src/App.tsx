@@ -8,6 +8,7 @@ import LoggerModal from "./components/LoggerModal/LoggerModal";
 import { deleteBoard } from "./store/slices/boardsSlice";
 import { addLog } from "./store/slices/loggerSlice";
 import { v4 } from "uuid";
+import { DragDropContext } from 'react-beautiful-dnd';
 
 function App() {
     const dispatch = useTypedDispatch();
@@ -51,6 +52,10 @@ function App() {
         }
     }
 
+    const handleDragEnd = () => {
+
+    }
+
     return (
         <div className = {appContainer}>
             {isLoggerOpen ? <LoggerModal setIsLoggerOpen={setIsLoggerOpen} /> : null}
@@ -60,7 +65,9 @@ function App() {
                 setActiveBoardId = {setActiveBoardId}
             />
             <div className={board}>
-                <ListsContainer lists={lists} boardId={getActiveBoard.boardId} />
+                <DragDropContext onDragEnd={handleDragEnd}>
+                    <ListsContainer lists={lists} boardId={getActiveBoard.boardId} />
+                </DragDropContext>
             </div>
             <div className={buttons}>
                 <button className={deleteBoardButton} onClick={handleDeleteBoard}>
