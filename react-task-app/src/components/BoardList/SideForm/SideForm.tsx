@@ -13,7 +13,7 @@ type TSideFormProps = {
 
 const SideForm :FC<TSideFormProps> = ({
   setIsFormOpen,
-  inputRef
+  // inputRef
 }) => {
   const [inputText, setInputText] = useState('');
   const dispatch = useTypedDispatch();
