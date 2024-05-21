@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { GrSubtract } from 'react-icons/gr'
 import Task from '../Task/Task'
 import ActionButton from '../ActionButton/ActionButton'
@@ -37,8 +37,8 @@ const List: FC<TListProps> = ({
   const handleTaskChange = (
     boardId: string,
     listId: string,
-    taskId: string,
-    task: ITask
+    _taskId: string,
+    task: ITask  
   ) => {
     dispatch(setModalData({boardId, listId, task}));
     dispatch(setModalActive(true));
