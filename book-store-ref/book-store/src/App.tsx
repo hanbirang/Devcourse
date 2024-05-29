@@ -1,9 +1,7 @@
+import Home from "./pages/Home";
+
 function App() {
-  return (
-    <div className="App">
-      book stroe
-    </div>
-  );
+  return <Home />;
 }
 
 export default App;
