@@ -1,6 +1,11 @@
+import Header from "../components/common/Header";
+
 function Home() {
     return (
-        <div>book store</div>
+        <>
+            <Header />
+            <div>home body</div>
+        </>
     );
 }
 
