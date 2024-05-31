@@ -1,8 +1,10 @@
 import { styled } from "styled-components";
+import ThemeSwitcher from "../header/ThemeSwitcher";
 function Header() {
     return (
         <HeaderStyle>
             <h1>book store</h1>
+            <ThemeSwitcher />
         </HeaderStyle>
     );
 }
