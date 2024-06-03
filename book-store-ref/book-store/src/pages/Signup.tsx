@@ -8,12 +8,16 @@ import { useState } from 'react';
 function Signup() {
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+    }
     
     return (
         <>
             <Title size="large">회원가입</Title>
             <SignupStyle>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <fieldset>
                         <InputText 
                             placeholder='이메일' inputType='email'
@@ -29,7 +33,7 @@ function Signup() {
                         />
                     </fieldset>
                     <fieldset>
-                        <Button size="medium" scheme='primary'>
+                        <Button type="submit" size="medium" scheme='primary'>
                             회원가입
                         </Button>
                     </fieldset>
