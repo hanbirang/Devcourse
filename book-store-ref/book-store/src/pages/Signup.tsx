@@ -3,7 +3,6 @@ import Title from '../components/common/Title';
 import InputText from '../components/common/InputText';
 import Button from '../components/common/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { signup } from '../api/auth.api';
 import { useAlert } from '../hooks/useAlert';
@@ -16,12 +15,7 @@ export interface SignupProps {
 function Signup() {
     const navigate = useNavigate();
     const showAlert = useAlert();
-    // const [ email, setEmail ] = useState("");
-    // const [ password, setPassword ] = useState("");
-
-    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    // }
+    
     const { 
         register, 
         handleSubmit, 
@@ -75,7 +69,7 @@ function Signup() {
    );
 }
 
-const SignupStyle = styled.div`
+export const SignupStyle = styled.div`
     max-width: ${({theme}) => theme.layout.width.small};
     margin: 80px auto;
 
@@ -101,4 +95,4 @@ const SignupStyle = styled.div`
     }
 `;
 
-export default Signup
+export default Signup;
