@@ -1,10 +1,16 @@
 // express 모듈 
 const express = require('express');
+const cors = require("cors");
 const app = express();
 
 // dotenv 모듈
 const dotenv = require('dotenv')
 dotenv.config();
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 
 app.listen(process.env.PORT);
 
