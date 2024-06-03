@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { login } from '../api/auth.api';
 import { useAlert } from '../hooks/useAlert';
 import { SignupStyle } from './Signup';
+import { useAuthStore } from '../store/authStore';
 
 export interface SignupProps {
     email: string;
@@ -15,6 +16,8 @@ export interface SignupProps {
 function Login() {
     const navigate = useNavigate();
     const showAlert = useAlert();
+
+    const { isloggedIn, storeLogin, storeLogout } = useAuthStore();
     
     const { 
         register, 
@@ -24,6 +27,8 @@ function Login() {
     
     const onSubmit = (data: SignupProps) => {
         login(data).then((res) => {
+            // 상태 변화 
+            storeLogin(res.token);
             console.log(res.token);
             showAlert("로그인 완료되었습니다.");
             navigate('/');
