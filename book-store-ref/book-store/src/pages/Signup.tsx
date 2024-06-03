@@ -3,30 +3,42 @@ import Title from '../components/common/Title';
 import InputText from '../components/common/InputText';
 import Button from '../components/common/Button';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 function Signup() {
-   return (
-    <>
-        <Title size="large">회원가입</Title>
-        <SignupStyle>
-            <form>
-                <fieldset>
-                    <InputText placeholder='이메일' />
-                </fieldset>
-                <fieldset>
-                    <InputText placeholder='비밀번호' />
-                </fieldset>
-                <fieldset>
-                    <Button size="medium" scheme='primary'>
-                        회원가입
-                    </Button>
-                </fieldset>
-                <div className="info">
-                    <Link to='/reset'>비밀번호 초기화</Link>
-                </div>
-            </form>
-        </SignupStyle>
-    </>
+    const [ email, setEmail ] = useState("");
+    const [ password, setPassword ] = useState("");
+    
+    return (
+        <>
+            <Title size="large">회원가입</Title>
+            <SignupStyle>
+                <form>
+                    <fieldset>
+                        <InputText 
+                            placeholder='이메일' inputType='email'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </fieldset>
+                    <fieldset>
+                        <InputText 
+                            placeholder='비밀번호' inputType='password' 
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </fieldset>
+                    <fieldset>
+                        <Button size="medium" scheme='primary'>
+                            회원가입
+                        </Button>
+                    </fieldset>
+                    <div className="info">
+                        <Link to='/reset'>비밀번호 초기화</Link>
+                    </div>
+                </form>
+            </SignupStyle>
+        </>
    );
 }
 
