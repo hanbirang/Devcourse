@@ -8,7 +8,7 @@ import Pagination from '../components/books/Pagination';
 import { useBooks } from '../hooks/useBooks';
 
 function Books() {
-    const { books, pagination } = useBooks();
+    const { books, pagination, isEmpty } = useBooks();
     
     return (
     <>
@@ -16,9 +16,9 @@ function Books() {
         <BooksStyle>
             <BooksFilter />
             <BooksViewSwitcher />
-            {books.length > 0 && <BooksList books={books} />}
-            {books.length === 0 && <BooksEmpty />}
-            <Pagination />
+            {!isEmpty && <BooksList books={books} />}
+            {isEmpty && <BooksEmpty />}
+            {!isEmpty && <Pagination />}
         </BooksStyle>
     </>
    );
