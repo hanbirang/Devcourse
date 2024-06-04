@@ -1,8 +1,26 @@
 import { styled } from 'styled-components';
+import { useCategory } from '../../hooks/useCategory';
+import Button from '../common/Button';
 
 function BooksFilter() {
+   const { category } = useCategory();
    return (
-    <BooksFilterStyle></BooksFilterStyle>
+      <BooksFilterStyle>
+         <div className="category">
+            {
+               category.map((item) => (
+                  <Button size='medium' scheme='normal' key={item.category_id}>
+                     {item.category_name}
+                  </Button>
+               ))
+            }
+         </div>
+         <div className="new">
+            <Button size='medium' scheme='normal'>
+               신간
+            </Button>
+         </div>
+      </BooksFilterStyle>
    );
 }
 
