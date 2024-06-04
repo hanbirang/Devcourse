@@ -32,6 +32,18 @@ function Pagination({pagination}: Props) {
 }
 
 const PaginationStyle = styled.div`
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   padding: 24px 0;
+
+   ol {
+      list-style: none;
+      display: flex;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+   }
 `;
 
 export default Pagination;
