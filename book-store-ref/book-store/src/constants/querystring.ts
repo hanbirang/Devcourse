@@ -1,5 +1,5 @@
 export const QUERYSTRING = {
     CATEGORY_ID: "category_id",
-    NEWS: "news",
+    NEWS: "newBook",
     PAGE: "page",
 };
