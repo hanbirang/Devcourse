@@ -47,6 +47,11 @@ function BooksViewSwitcher() {
 }
 
 const BooksViewSwitcherStyle = styled.div`
+   display: flex;
+   gap: 8px;
+   svg {
+      fill: #fff;
+   }
 `;
 
 export default BooksViewSwitcher;
