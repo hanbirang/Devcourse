@@ -30,7 +30,10 @@ function Pagination({pagination}: Props) {
                         <li>
                            <Button 
                               key={index} size='small' 
-                              scheme='normal'
+                              scheme={
+                                 index + 1 === currentPage ?
+                                 'primary' : 'normal'
+                              }
                               onClick={() => handleClickPage(index + 1)}
                            >
                               {index + 1}
