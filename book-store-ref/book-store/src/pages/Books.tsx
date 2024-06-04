@@ -5,15 +5,18 @@ import BooksList from '../components/books/BooksList';
 import BooksEmpty from '../components/books/BooksEmpty';
 import BooksViewSwitcher from '../components/books/BooksViewSwitcher';
 import Pagination from '../components/books/Pagination';
+import { useBooks } from '../hooks/useBooks';
 
 function Books() {
-   return (
+    const { books, pagination } = useBooks();
+    
+    return (
     <>
     <Title size='large'>도서 검색 결과</Title>
         <BooksStyle>
             <BooksFilter />
             <BooksViewSwitcher />
-            <BooksList />
+            <BooksList books={books} />
             <BooksEmpty />
             <Pagination />
         </BooksStyle>
