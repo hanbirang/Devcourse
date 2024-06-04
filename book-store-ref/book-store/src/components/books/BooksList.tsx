@@ -10,7 +10,7 @@ interface Props {
    books: Book[];
 }
 
-function BooksList({ books}: Props) {
+function BooksList({ books }: Props) {
    const [ view, setView ] = useState<ViewMode>('grid');
    const location = useLocation();
 
@@ -25,7 +25,7 @@ function BooksList({ books}: Props) {
       <BooksListStyle view={view}>
          {
             books?.map((item) => (
-               <BookItem key={item.id} book={item} />
+               <BookItem key={item.id} book={item} view={view} />
             ))
          }
       </BooksListStyle>
@@ -40,7 +40,7 @@ const BooksListStyle = styled.div<BooksListStyleProps>`
    display: grid;
    grid-template-columns: ${({view}) => (
       view === 'grid' ? 'repeat(4, 1fr);' : 'repeat(1, 1fr);'
-   )}
+   )};
    gap: 24px;
 `;
 
