@@ -73,6 +73,9 @@ function BookDetail() {
                      </dl>
                   ))
                }
+               <p className="summary">{book.summary}</p>
+               <div className="like">라이크</div>
+               <div className="add-cart">장바구니 넣기</div>
             </div>
          </header>
          <div className="content">
