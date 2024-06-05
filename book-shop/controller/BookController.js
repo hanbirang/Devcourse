@@ -38,6 +38,8 @@ const allBooks = (req, res) => {
                 results.map(function(result) {
                     result.pubDate = result.pub_date;
                     delete result.pub_date;
+                    result.categoryId = result.category_id;
+                    delete result.category_id;
                 });
                 allBooksRes.books = results;
             }
@@ -109,6 +111,10 @@ const bookDetail = (req, res) => {
                     results.map(function(result) {
                         result.pubDate = result.pub_date;
                         delete result.pub_date;
+                        result.categoryId = result.category_id;
+                        delete result.category_id;
+                        result.categoryName = result.category_name;
+                        delete result.category_name;
                     });
                     return res.status(StatusCodes.OK).json(results[0]);
                 }
