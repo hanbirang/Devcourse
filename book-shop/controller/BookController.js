@@ -8,7 +8,6 @@ const allBooks = (req, res) => {
     let allBooksRes = {};
 
     let {category_id, newBook, limit, currentPage } = req.query;
-    
     let offset = limit * (currentPage-1);
 
     let sql = `SELECT SQL_CALC_FOUND_ROWS *, (SELECT count(*) FROM likes WHERE liked_book_id=books.id) AS likes FROM books`;
@@ -33,11 +32,15 @@ const allBooks = (req, res) => {
         (err, results) => {
             if (err) {
                 console.log(err);
-                // return res.status(StatusCodes.BAD_REQUEST).end();
+                return res.status(StatusCodes.NOT_FOUND).end();
             }
-            console.log(results);
-            if (results.length)
+            if (results.length) {
+                results.map(function(result) {
+                    result.pubDate = result.pub_date;
+                    delete result.pub_date;
+                });
                 allBooksRes.books = results;
+            }
             else 
                 return res.status(StatusCodes.NOT_FOUND).end();
     });
@@ -61,6 +64,7 @@ const allBooks = (req, res) => {
 };
 
 const bookDetail = (req, res) => {
+    let allBooksRes = {};
 
     // 로그인 상태가 아니면 => liked 빼고 보내주면 되고
     // 로그인 상태이면 => liked 추가해서 
@@ -99,12 +103,15 @@ const bookDetail = (req, res) => {
         conn.query(sql, values,
             (err, results) => {
                 if (err) {
-                    console.log(err);
                     return res.status(StatusCodes.BAD_REQUEST).end();
                 }
-
-                if (results[0])
+                if (results.length) {
+                    results.map(function(result) {
+                        result.pubDate = result.pub_date;
+                        delete result.pub_date;
+                    });
                     return res.status(StatusCodes.OK).json(results[0]);
+                }
                 else 
                     return res.status(StatusCodes.NOT_FOUND).end();
         });
