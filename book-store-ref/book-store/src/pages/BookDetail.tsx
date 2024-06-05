@@ -58,23 +58,23 @@ function BookDetail() {
             <div className="img">
                <img src={getImgSrc(book.img)} alt={book.title} />
             </div>
+            <div className="info">
+               <Title size='large' color='text'>{book.title}</Title>
+               {
+                  bookInfoList.map((item) => (
+                     <dl>
+                        <dt>{item.label}</dt>
+                        <dd>
+                           {
+                              item.filter ? 
+                              item.filter(book) : book[item.key as keyof IBookDetail]
+                           }
+                        </dd>
+                     </dl>
+                  ))
+               }
+            </div>
          </header>
-         <div className="info">
-            <Title size='large' color='text'>{book.title}</Title>
-            {
-               bookInfoList.map((item) => (
-                  <dl>
-                     <dt>{item.label}</dt>
-                     <dd>
-                        {
-                           item.filter ? 
-                           item.filter(book) : book[item.key as keyof IBookDetail]
-                        }
-                     </dd>
-                  </dl>
-               ))
-            }
-         </div>
          <div className="content">
 
          </div>
@@ -83,6 +83,39 @@ function BookDetail() {
 }
 
 const BookDetailStyle = styled.div`
+   .header {
+      display: flex;
+      align-items: start;
+      gap: 24px;
+      padding: 0 0 24px 0;
+
+      .img {
+         flex: 1;
+         img {
+            width: 100%;
+            height: auto;
+         }
+      }
+
+      .info {
+         flex: 1;
+         display: flex;
+         flex-direction: column;
+         gap: 12px;
+
+         dl {
+            display: flex;
+            margin: 0;
+            dt {
+               width: 80px;
+               color: ${({theme}) => theme.color.secondary};
+            }
+            a {
+               color: ${({theme}) => theme.color.primary};
+            }
+         }
+      }
+   }
 `;
 
 export default BookDetail;
