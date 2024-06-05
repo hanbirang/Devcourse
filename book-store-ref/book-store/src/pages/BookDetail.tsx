@@ -4,11 +4,18 @@ import { useBook } from '../hooks/useBook';
 import { getImgSrc } from '../utils/image';
 import Title from '../components/common/Title';
 import { BookDetail as IBookDetail } from '../models/book.model';
+import { formatDate, formatNumber } from '../utils/format';
+import { Link } from 'react-router-dom';
 
 const bookInfoList = [
    {
       label: "카테고리",
-      key: "categoryName"
+      key: "categoryName",
+      filter: (book: IBookDetail) => (
+         <Link to={`/books?category_id=${book.categoryId}`}>
+            {book.categoryName}
+         </Link>
+      )
    },
    {
       label: "포맷",
@@ -24,11 +31,17 @@ const bookInfoList = [
    },
    {
       label: "출간일",
-      key: "pubDate"
+      key: "pubDate",
+      filter: (book: IBookDetail) => {
+         return formatDate(book.pubDate);
+      }
    },
    {
       label: "가격",
-      key: "price"
+      key: "price",
+      filter: (book: IBookDetail) => {
+         return `${formatNumber(book.price)} 원`;
+      }
    }
 ];
 
@@ -52,7 +65,12 @@ function BookDetail() {
                bookInfoList.map((item) => (
                   <dl>
                      <dt>{item.label}</dt>
-                     <dd>{book[item.key as keyof IBookDetail]}</dd>
+                     <dd>
+                        {
+                           item.filter ? 
+                           item.filter(book) : book[item.key as keyof IBookDetail]
+                        }
+                     </dd>
                   </dl>
                ))
             }
