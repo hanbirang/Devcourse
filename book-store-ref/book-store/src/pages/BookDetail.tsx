@@ -79,7 +79,14 @@ function BookDetail() {
             </div>
          </header>
          <div className="content">
-
+            <Title size='medium'>상세 설명</Title>
+            <p className="detail">
+               {book.detail}
+            </p>
+            <Title size='medium'>목차</Title>
+            <p className="index">
+               {book.contents}
+            </p>
          </div>
       </BookDetailStyle>
    );
