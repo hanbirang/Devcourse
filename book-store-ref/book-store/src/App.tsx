@@ -49,7 +49,7 @@ const router = createBrowserRouter([
     )
   },
   {
-    path: "/carts",
+    path: "/cart",
     element: (
       <Layout><Cart /></Layout>
     )
