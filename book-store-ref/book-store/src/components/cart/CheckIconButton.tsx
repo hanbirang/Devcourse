@@ -12,8 +12,6 @@ function CheckIconButton({isChecked, onCheck}: Props) {
                 isChecked ?
                 (<FaRegCheckCircle />) : (<FaRegCircle />)
             }
-            <FaRegCircle />
-            <FaRegCheckCircle />
         </CheckIconButtonStyle>
     );
 }
