@@ -2,10 +2,11 @@ import { styled } from 'styled-components';
 import Title from '../components/common/Title';
 import CartItem from '../components/cart/CartItem';
 import { useCart } from '../hooks/useCart';
+import { useState } from 'react';
 
 function Cart() {
     const { carts } = useCart();
-    console.log(carts);
+    const [ checkedItems, setCheckedItems ] = useState<number[]>([]);
     return (
         <>
             <Title size='large'>장바구니</Title>
@@ -13,7 +14,10 @@ function Cart() {
                 <div className="content">
                     {
                         carts.map((cart) => (
-                            <CartItem key={cart.id} cart={cart} />
+                            <CartItem 
+                                key={cart.id} cart={cart} 
+                                checkedItems={checkedItems}
+                            />
                         ))
                     }
                 </div>
