@@ -2,19 +2,38 @@ import { styled } from 'styled-components';
 import { BookDetail } from '../../models/book.model';
 import InputText from '../common/InputText';
 import Button from '../common/Button';
+import { useState } from 'react';
 
 interface Props {
     book: BookDetail;
 }
 function AddToCart({book}: Props) {
+    const [quantity, setQuantity] = useState<number>(1);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuantity(Number(e.target.value));
+    };
+
+    const handleIncrease = () => {
+        setQuantity(quantity + 1);
+    };
+
+    const handleDecrease = () => {
+        if (quantity === 1) return;
+        setQuantity(quantity - 1);
+    };
+
     return (
         <AddToCartStyle>
             <div>
-                <InputText inputType='number' />
-                <Button size='medium' scheme='normal'>
+                <InputText 
+                    inputType='number' value={quantity} 
+                    onChange={handleChange}
+                />
+                <Button size='medium' scheme='normal' onClick={handleIncrease}>
                     +
                 </Button>
-                <Button size='medium' scheme='normal'>
+                <Button size='medium' scheme='normal' onClick={handleDecrease}>
                     -
                 </Button>
             </div>
