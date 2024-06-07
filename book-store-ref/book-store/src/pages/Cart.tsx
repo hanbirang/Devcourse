@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import Empty from '../components/common/Empty';
 import { FaShoppingCart } from 'react-icons/fa';
 import CartSummary from '../components/cart/CartSummary';
+import Button from '../components/common/Button';
 
 function Cart() {
     const { carts, isEmpty, deleteCartItem } = useCart();
@@ -68,6 +69,9 @@ function Cart() {
                                 totalQuantity={totalQuantity} 
                                 totalPrice={totalPrice} 
                             />
+                            <Button size='large' scheme='primary'>
+                                주문하기
+                            </Button>
                         </div>
                     </>
                 )}
