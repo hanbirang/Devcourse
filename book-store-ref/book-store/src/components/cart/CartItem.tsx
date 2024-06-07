@@ -4,16 +4,23 @@ import Button from '../common/Button';
 import Title from '../common/Title';
 import { formatNumber } from '../../utils/format';
 import CheckIconButton from './CheckIconButton';
+import { useMemo } from 'react';
 
 interface Props {
     cart: Cart;
+    checkedItems: number[];
 }
 
-function CartItem({cart}: Props) {
+function CartItem({cart, checkedItems}: Props) {
+    // checkedItems 목록에 내가 있는지 판단 = checked 
+    const isChecked = useMemo(() => {
+        return checkedItems.includes(cart.id);
+    }, [checkedItems, cart.id]);
+
     return (
         <CartItemStyle>
             <div className="info">
-                <CheckIconButton />
+                <CheckIconButton isChecked={isChecked} onCheck={() => {}}/>
                 <div>체크 버튼</div>
                 <div>
                     <Title size='medium' color='text'>{cart.title}</Title>
