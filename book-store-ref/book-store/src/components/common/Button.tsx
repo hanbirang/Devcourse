@@ -24,6 +24,7 @@ function Button({
             scheme={scheme} 
             disabled={disabled} 
             isLoading={isLoading}
+            onClick={onClick}
             {...props}
         >
             {children}
