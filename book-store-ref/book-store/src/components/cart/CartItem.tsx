@@ -9,18 +9,23 @@ import { useMemo } from 'react';
 interface Props {
     cart: Cart;
     checkedItems: number[];
+    onCheck: (id: number) => void;
 }
 
-function CartItem({cart, checkedItems}: Props) {
+function CartItem({cart, checkedItems, onCheck}: Props) {
     // checkedItems 목록에 내가 있는지 판단 = checked 
     const isChecked = useMemo(() => {
         return checkedItems.includes(cart.id);
     }, [checkedItems, cart.id]);
 
+    const handleCheck = () => {
+        onCheck(cart.id);
+    }
+
     return (
         <CartItemStyle>
             <div className="info">
-                <CheckIconButton isChecked={isChecked} onCheck={() => {}}/>
+                <CheckIconButton isChecked={isChecked} onCheck={handleCheck}/>
                 <div>체크 버튼</div>
                 <div>
                     <Title size='medium' color='text'>{cart.title}</Title>
