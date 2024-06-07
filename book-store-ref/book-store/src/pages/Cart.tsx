@@ -5,6 +5,7 @@ import { useCart } from '../hooks/useCart';
 import { useState } from 'react';
 import Empty from '../components/common/Empty';
 import { FaShoppingCart } from 'react-icons/fa';
+import CartSummary from '../components/cart/CartSummary';
 
 function Cart() {
     const { carts, isEmpty, deleteCartItem } = useCart();
@@ -45,7 +46,7 @@ function Cart() {
                             }
                         </div>
                         <div className="summary">
-                            summary
+                            <CartSummary totalQuantity={3} totalPrice={10000}/>
                         </div>
                     </>
                 )}
