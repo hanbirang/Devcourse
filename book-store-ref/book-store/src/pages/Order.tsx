@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Title from '../components/common/Title';
 import { CartStyle } from './Cart';
 import CartSummary from '../components/cart/CartSummary';
@@ -7,13 +7,17 @@ import InputText from '../components/common/InputText';
 import { useForm } from 'react-hook-form';
 import { Delivery, OrderSheet } from '../models/order.model';
 import FindAddressButton from '../components/order/FindAddressButton';
+import { order } from '../api/order.api';
+import { useAlert } from '../hooks/useAlert';
 
 interface DeliveryForm extends Delivery {
     addressDetail: string;
 };
 
 function Order() {
+    const { showAlert, showConfirm } = useAlert();
     const location = useLocation();
+    const navigate = useNavigate();
     const orderDataFromCart = location.state;
     const { totalQuantity, totalPrice, firstBookTitle } = orderDataFromCart;
 
@@ -25,7 +29,7 @@ function Order() {
     } = useForm<DeliveryForm>();
 
     const handlePay = (data: DeliveryForm) => {
-        const Orderdata: OrderSheet = {
+        const orderData: OrderSheet = {
             ...orderDataFromCart,
             delivery: {
                 ...data,
@@ -33,8 +37,13 @@ function Order() {
             }
         };
 
-        // 서버로 넘겨준다 
-        console.log(Orderdata);
+        showConfirm('주문을 진행하시겠습니까?', () => {
+            // 서버로 넘겨준다 
+            order(orderData).then(() => {
+                showAlert('주문이 처리되었습니다.');
+                navigate('/orderlist');
+            });
+        });
     };
 
     return (
