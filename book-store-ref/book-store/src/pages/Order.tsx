@@ -6,6 +6,7 @@ import Button from '../components/common/Button';
 import InputText from '../components/common/InputText';
 import { useForm } from 'react-hook-form';
 import { Delivery, OrderSheet } from '../models/order.model';
+import FindAddressButton from '../components/order/FindAddressButton';
 
 interface DeliveryForm extends Delivery {
     addressDetail: string;
@@ -18,7 +19,8 @@ function Order() {
 
     const { 
         register, 
-        handleSubmit, 
+        handleSubmit,
+        setValue,
         formState: { errors }
     } = useForm<DeliveryForm>();
 
@@ -53,9 +55,11 @@ function Order() {
                                     }
                                 />
                             </div>
-                            <Button size='medium' scheme='normal'>
-                                주소 찾기
-                            </Button>
+                            <FindAddressButton 
+                                onCompleted = {(address) => {
+                                    setValue('address', address);
+                                }}
+                            />
                         </fieldset>
                         {
                             errors.address && 
