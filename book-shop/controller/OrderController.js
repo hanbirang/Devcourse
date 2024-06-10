@@ -91,7 +91,16 @@ const getOrders = async (req, res) => {
                     ON orders.delivery_id = delivery.id;`;
         
         let [rows, fields] = await conn.query(sql);
-        return res.status(StatusCodes.OK).json(rows);
+        const modifiedRows = rows.map((row) => {
+            const { total_quantity, total_price, created_at, ...rest } = row;
+            return {
+                ...rest,
+                totalQuantity: row.total_quantity,
+                totalPrice: row.total_price,
+                createdAt: row.created_at
+            };
+        });
+        return res.status(StatusCodes.OK).json(modifiedRows);
     }
 };
 
