@@ -1,7 +1,11 @@
 import { styled } from 'styled-components';
 import Title from '../components/common/Title';
+import { useOrders } from '../hooks/useOrders';
 
 function OrderList() {
+    const { orders } = useOrders();
+    console.log(orders);
+
     return (
         <>
             <Title size='large'>주문 내역</Title>
@@ -20,7 +24,20 @@ function OrderList() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr></tr>
+                        {
+                            orders.map((order) => (
+                                <tr>
+                                    <td>{order.id}</td>
+                                    <td>{order.createdAt}</td>
+                                    <td>{order.address}</td>
+                                    <td>{order.receiver}</td>
+                                    <td>{order.contact}</td>
+                                    <td>{order.bookTitle}</td>
+                                    <td>{order.totalQuantity}</td>
+                                    <td>{order.totalPrice}</td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
             </OrderListStyle>
