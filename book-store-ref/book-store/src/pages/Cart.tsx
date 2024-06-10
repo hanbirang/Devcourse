@@ -161,6 +161,12 @@ export const CartStyle = styled.div`
             }
         }
 
+        .error-text {
+            color: red;
+            margin: 0;
+            padding: 0 0 12px 0;
+            text-align: right;
+        }
     }
 `;
 
