@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { Order } from "../models/order.model";
-import { fetchOrders } from "../api/order.api";
+import { fetchOrder, fetchOrders } from "../api/order.api";
 
 export const useOrders = () => {
     const [ orders, setOrders ] = useState<Order[]>([]);
+    const [ selectedItemId, setSelectedItemId ] = useState<number | null>(null);
 
     useEffect(() => {
         fetchOrders().then((orders) => {
@@ -11,5 +12,11 @@ export const useOrders = () => {
         });
     }, []);
 
-    return { orders };
-}
+    const selectOrderItem = (orderId: number) => {
+        fetchOrder(orderId).then((orderDetail) => {
+            console.log('orderDetail', orderDetail);
+        });
+    };
+
+    return { orders, selectedItemId, selectOrderItem };
+};
