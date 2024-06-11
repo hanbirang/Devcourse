@@ -5,9 +5,13 @@ export const fetchBookReview = async(bookId: string) => {
     return await requestHandler<BookReviewItem[]>("get", `/reviews/${bookId}`);
 };
 
+interface AddBookReviewResponse {
+    message: string;
+};
+
 export const addBookReview = async(
     bookId: string,
     data: BookReviewItemWrite
 ) => {
-    return await requestHandler("post", `/reviews/${bookId}`, data);
-}
+    return await requestHandler<AddBookReviewResponse>("post", `/reviews/${bookId}`);
+};
