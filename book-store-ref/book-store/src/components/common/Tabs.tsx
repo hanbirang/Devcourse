@@ -40,6 +40,33 @@ function Tabs({ children }: TabsProps) {
     );
 }
 
-const TabsStyle = styled.div``;
+const TabsStyle = styled.div`
+    .tab-header {
+        display: flex;
+        gap: 2px;
+        border-bottom: 1px solid #ddd;
+
+        button {
+            border: none;
+            background: #ddd;
+            cursor: pointer;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: ${({ theme }) => theme.color.text};
+            border-radius: ${({ theme }) => theme.borderRadius.default}
+                ${({ theme }) => theme.borderRadius.default} 0 0;
+            padding: 12px 24px;
+
+            &.active {
+                color: #fff;
+                background: ${({ theme }) => theme.color.primary};
+            }
+        }
+    }
+
+    .tab-content {
+        padding: 24px;
+    }
+`;
 
 export { Tabs, Tab };
