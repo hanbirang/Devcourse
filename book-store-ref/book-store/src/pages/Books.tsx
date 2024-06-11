@@ -6,24 +6,32 @@ import BooksEmpty from '../components/books/BooksEmpty';
 import BooksViewSwitcher from '../components/books/BooksViewSwitcher';
 import Pagination from '../components/books/Pagination';
 import { useBooks } from '../hooks/useBooks';
+import Loading from '@/components/common/Loading';
 
 function Books() {
     const { books, pagination, isEmpty, isBooksLoading } = useBooks();
+
+    if (isEmpty) {
+        return <BooksEmpty />;
+    }
+
+    if (!books || !pagination || isBooksLoading) {
+        return <Loading />;
+    }
     
     return (
-    <>
-    <Title size='large'>도서 검색 결과</Title>
-        <BooksStyle>
-            <div className="filter">
-                <BooksFilter />
-                <BooksViewSwitcher />
-            </div>
-            {!isEmpty && books && <BooksList books={books} />}
-            {isEmpty && <BooksEmpty />}
-            {!isEmpty && pagination && <Pagination pagination={pagination}/>}
-        </BooksStyle>
-    </>
-   );
+        <>
+        <Title size='large'>도서 검색 결과</Title>
+            <BooksStyle>
+                <div className="filter">
+                    <BooksFilter />
+                    <BooksViewSwitcher />
+                </div>
+                <BooksList books={books} />
+                <Pagination pagination={pagination}/>
+            </BooksStyle>
+        </>
+    );
 }
 
 const BooksStyle = styled.div`
