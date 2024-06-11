@@ -1,16 +1,17 @@
-import { login, signup } from "@/api/auth.api";
+import { login, resetPassword, resetRequest, signup } from "@/api/auth.api";
 import { LoginProps } from "@/pages/Login";
 import { useAuthStore } from "@/store/authStore";
 import { useAlert } from "./useAlert";
 import { useNavigate } from "react-router-dom";
 import { SignupProps } from "@/pages/Signup";
+import { useState } from "react";
 
 export const useAuth = () => {
     const { showAlert } = useAlert();
     const navigate = useNavigate();
 
     // 상태
-    const { isloggedIn, storeLogin, storeLogout } = useAuthStore();
+    const { storeLogin } = useAuthStore();
 
     // 메소드
     const userLogin = (data: LoginProps) => {
@@ -33,6 +34,24 @@ export const useAuth = () => {
         });
     };
 
+    const userResetPassword = (data: SignupProps) => {
+        resetPassword(data).then(() => {
+            showAlert('비밀번호가 초기화되었습니다.');
+            navigate('/login');
+        });
+    };
+
+    const [ resetRequested, setResetRequested ]= useState(false);
+
+    const userResetRequest = (data: SignupProps) => {
+        resetRequest(data).then(() => {
+            setResetRequested(true);
+        });
+    };
+
     // 리턴
-    return { userLogin, userSignup };
+    return { 
+        userLogin, userSignup, userResetPassword, 
+        userResetRequest, resetRequested
+    };
 };
