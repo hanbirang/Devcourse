@@ -52,6 +52,13 @@ const BookReviewItemStyle = styled.div`
         font-size: 0.875rem;
         color: ${({theme}) => theme.color.secondary};
         padding: 0;
+
+        .star {
+            padding: 0 0 0 8px;
+            svg {
+                fill: ${({theme}) => theme.color.primary};
+            }
+        }
     }
 
     .content {
