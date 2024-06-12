@@ -8,6 +8,7 @@ import { useBooksInfinite } from "@/hooks/useBooksInfinite";
 import Loading from "@/components/common/Loading";
 import Button from "@/components/common/Button";
 import { Book } from "@/models/book.model";
+import { useEffect, useRef } from "react";
 
 function Books() {
     const {
@@ -18,6 +19,29 @@ function Books() {
         fetchNextPage,
         hasNextPage,
     } = useBooksInfinite();
+
+    const moreRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    loadMore();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        if (moreRef.current) {
+            observer.observe(moreRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [books, moreRef]);
+
+    const loadMore = () => {
+        if (!hasNextPage) return;
+        fetchNextPage();
+    }
 
     if (isEmpty) {
         return <BooksEmpty />;
@@ -40,7 +64,7 @@ function Books() {
                 </div>
                 <BooksList books={filteredBooks} />
                 {/* <Pagination pagination={pagination}/> */}
-                <div className="more">
+                <div className="more" ref={moreRef}>
                     <Button
                         size="medium"
                         scheme="normal"
