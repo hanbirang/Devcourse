@@ -1,19 +1,37 @@
+import { useRef } from "react";
 import { FaPlus } from "react-icons/fa";
 import { styled } from "styled-components";
 
 interface Props {
     children: React.ReactNode;
+    isOpen: boolean;
+    onClose: () => void;
 }
-function Modal({ children }: Props) {
+function Modal({ children, isOpen, onClose }: Props) {
+    const modalRef = useRef<HTMLDivElement | null>(null);
+    const handleClose = () => {
+        onClose();
+    };
+
+    const handleOverlayClick = (e: React.MouseEvent) => {
+        if (modalRef.current && !modalRef.current?.contains(e.target as Node)) {
+            handleClose();
+        }
+    };
+
     return (
-        <ModalStyle>
-            <div className="modal-body">
-                <div className="modal-contents">{children}</div>
-                <button className="modal-close">
-                    <FaPlus />
-                </button>
-            </div>
-        </ModalStyle>
+        <>
+            {isOpen && (
+                <ModalStyle onClick={handleOverlayClick}>
+                    <div className="modal-body" ref={modalRef}>
+                        <div className="modal-contents">{children}</div>
+                        <button className="modal-close" onClick={handleClose}>
+                            <FaPlus />
+                        </button>
+                    </div>
+                </ModalStyle>
+            )}
+        </>
     );
 }
 
@@ -32,7 +50,7 @@ const ModalStyle = styled.div`
         left: 50%;
         transform: translate(-50%, -50%);
         padding: 56px 32px 32px;
-        border-radius: ${({theme}) => theme.borderRadius.default};
+        border-radius: ${({ theme }) => theme.borderRadius.default};
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 
         background-color: #fff;
