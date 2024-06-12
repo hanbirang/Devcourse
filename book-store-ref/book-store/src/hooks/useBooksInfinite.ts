@@ -4,7 +4,7 @@ import { QUERYSTRING } from "../constants/querystring";
 import { LIMIT } from "../constants/pagination";
 import { useInfiniteQuery } from "react-query";
 
-export const useBooks = () => {
+export const useBooksInfinite = () => {
     const location = useLocation();
 
     const getBooks = ({ pageParam }: { pageParam: number }) => {
