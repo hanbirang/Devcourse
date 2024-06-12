@@ -17,6 +17,44 @@ function Modal({ children }: Props) {
     );
 }
 
-const ModalStyle = styled.div``;
+const ModalStyle = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    .modal-body {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 56px 32px 32px;
+        border-radius: ${({theme}) => theme.borderRadius.default};
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+
+        background-color: #fff;
+        max-width: 80%;
+    }
+
+    .modal-close {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 12px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            transform: rotate(45deg);
+        }
+    }
+`;
 
 export default Modal;
