@@ -1,5 +1,5 @@
 import useToastStore, { ToastItem } from "@/store/toastStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaBan, FaInfoCircle, FaPlus } from "react-icons/fa";
 import { styled } from "styled-components";
 
@@ -7,19 +7,32 @@ export const TOAST_REMOVE_DELAY = 3000; /// 3초
 
 function Toast({ id, message, type }: ToastItem) {
     const removeToast = useToastStore((state) => state.removeToast);
-    const handleRemoveToast = () => {};
+    const [isFadingOut, setIsFadingOut] = useState(false);
+
+    const handleRemoveToast = () => {
+        setIsFadingOut(true);
+    };
 
     useEffect(() => {
         const timer = setTimeout(() => {
             // 삭제
-            removeToast(id);
+            handleRemoveToast();
         }, TOAST_REMOVE_DELAY);
 
         return () => clearTimeout(timer);
     }, []);
 
+    const handleAnimationEnd = () => {
+        if (isFadingOut) {
+            removeToast(id);
+        }
+    };
+
     return (
-        <ToastStyle>
+        <ToastStyle
+            className={isFadingOut ? "fade-out" : "fade-in"}
+            onAnimationEnd={handleAnimationEnd}
+        >
             <p>
                 {type === "info" && <FaInfoCircle />}
                 {type === "error" && <FaBan />}
@@ -33,6 +46,32 @@ function Toast({ id, message, type }: ToastItem) {
 }
 
 const ToastStyle = styled.div`
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fade-out {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+
+    &.fade-in {
+        animation: fade-in 0.3s ease-in-out forwards;
+    }
+
+    &.fade-out {
+        animation: fade-out 0.3s ease-in-out forwards;
+    }
+
     background-color: ${({ theme }) => theme.color.background};
     padding: 12px;
     border-radius: ${({ theme }) => theme.borderRadius.default};
@@ -41,6 +80,8 @@ const ToastStyle = styled.div`
     justify-content: space-between;
     align-items: start;
     gap: 24px;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
 
     p {
         color: ${({ theme }) => theme.color.text};
