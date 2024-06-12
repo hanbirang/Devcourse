@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { FaPlus } from "react-icons/fa";
 import { styled } from "styled-components";
 
@@ -18,6 +18,24 @@ function Modal({ children, isOpen, onClose }: Props) {
             handleClose();
         }
     };
+
+    const handleKeydown = (e: KeyboardEvent) => {
+        if (e.key === "Escape") {
+            handleClose();
+        }
+    };
+
+    useEffect(() => {
+        if (isOpen) {
+            window.addEventListener("keydown", handleKeydown);
+        } else {
+            window.removeEventListener("keydown", handleKeydown);
+        }
+
+        return () => {
+            window.removeEventListener("keydown", handleKeydown);
+        }
+    }, [isOpen]);
 
     return (
         <>
