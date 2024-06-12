@@ -19,6 +19,15 @@ function ToastContainer() {
     );
 }
 
-const ToastContainerStyle = styled.div``;
+const ToastContainerStyle = styled.div`
+    position: fixed;
+    top: 32px;
+    right: 24px;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`;
 
 export default ToastContainer;
