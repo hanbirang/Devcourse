@@ -1,11 +1,22 @@
-import { ToastItem } from "@/store/toastStore";
+import useToastStore, { ToastItem } from "@/store/toastStore";
+import { useEffect } from "react";
 import { FaBan, FaInfoCircle, FaPlus } from "react-icons/fa";
 import { styled } from "styled-components";
 
-function Toast({ id, message, type }: ToastItem) {
-    const handleRemoveToast = () => {
+export const TOAST_REMOVE_DELAY = 3000; /// 3초
 
-    };
+function Toast({ id, message, type }: ToastItem) {
+    const removeToast = useToastStore((state) => state.removeToast);
+    const handleRemoveToast = () => {};
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            // 삭제
+            removeToast(id);
+        }, TOAST_REMOVE_DELAY);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <ToastStyle>
@@ -22,9 +33,9 @@ function Toast({ id, message, type }: ToastItem) {
 }
 
 const ToastStyle = styled.div`
-    background-color: ${({theme}) => theme.color.background};
+    background-color: ${({ theme }) => theme.color.background};
     padding: 12px;
-    border-radius: ${({theme}) => theme.borderRadius.default};
+    border-radius: ${({ theme }) => theme.borderRadius.default};
 
     display: flex;
     justify-content: space-between;
@@ -32,7 +43,7 @@ const ToastStyle = styled.div`
     gap: 24px;
 
     p {
-        color: ${({theme}) => theme.color.text};
+        color: ${({ theme }) => theme.color.text};
         line-height: 1;
         margin: 0;
         flex: 1;
