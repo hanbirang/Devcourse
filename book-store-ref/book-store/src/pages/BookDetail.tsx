@@ -118,6 +118,10 @@ const BookDetailStyle = styled.div`
         gap: 24px;
         padding: 0 0 24px 0;
 
+        > div {
+            position: relative !important; 
+        }
+
         .img {
             flex: 1;
             img {
