@@ -29,6 +29,21 @@ function MainReview({ reviews }: Props) {
     );
 }
 
-const MainReviewStyle = styled.div``;
+const MainReviewStyle = styled.div`
+    padding: 0 0 24px 0;
+
+    .slick-track {
+        padding: 12px 0;
+    }
+
+    .slick-slide > div {
+        margin: 0 12px;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        color: #000;
+    }
+`;
 
 export default MainReview;
