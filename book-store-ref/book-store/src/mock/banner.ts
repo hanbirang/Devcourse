@@ -22,7 +22,7 @@ const bannersData: Banner[] = [
         id: 3,
         title: "배너 3 제목",
         description: "배너 3 설명",
-        image: "https://picsum.photos/id/333/1200/400",
+        image: "https://picsum.photos/id/33/1200/400",
         url: "http://some.url",
         target: "_blank"
     },
