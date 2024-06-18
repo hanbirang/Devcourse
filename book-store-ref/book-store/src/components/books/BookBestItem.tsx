@@ -1,6 +1,6 @@
 import { Book } from "@/models/book.model";
 import { styled } from "styled-components";
-import BookItem from "./BookItem";
+import BookItem, { BookItemStyle } from "./BookItem";
 
 interface Props {
     book: Book;
@@ -16,6 +16,33 @@ function BookBestItem({ book, itemIndex }: Props) {
     );
 }
 
-const BookBestItemStyle = styled.div``;
+const BookBestItemStyle = styled.div`
+    ${BookItemStyle} {
+        .summary,
+        .price,
+        .likes {
+            display: none;
+        }
+    }
+
+    position: relative;
+
+    .rank {
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        width: 40px;
+        height: 40px;
+        background: ${(props) => props.theme.color.primary};
+        border-radius: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: #fff;
+        font-weight: 700;
+        font-style: italic;
+    }
+`;
 
 export default BookBestItem;
