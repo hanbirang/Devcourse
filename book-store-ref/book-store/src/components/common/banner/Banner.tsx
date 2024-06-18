@@ -24,6 +24,10 @@ function Banner({ banners }: Props) {
         setCurrentIndex(currentIndex + 1);
     };
 
+    const handleIndicatorClick = (index: number) => {
+        setCurrentIndex(index);
+    };
+
     return (
         <BannerStyle>
             {/* 베너 그룹 */}
@@ -48,6 +52,9 @@ function Banner({ banners }: Props) {
                 {banners.map((_, index) => (
                     <span
                         className={index === currentIndex ? "active" : ""}
+                        onClick={() => {
+                            handleIndicatorClick(index);
+                        }}
                     ></span>
                 ))}
             </BannerIndicatorStyle>
