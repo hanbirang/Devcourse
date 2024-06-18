@@ -7,12 +7,13 @@ interface FetchBooksParams {
     newBook?: boolean;
     currentPage?: number;
     limit: number;
-}
+};
 
 interface FetchBooksResponse {
-    books: Book[];
-    pagination: Pagination;
-}
+    books?: Book[];
+    pagination?: Pagination;
+};
+
 export const fetchBooks = async (params: FetchBooksParams) => {
     try {
         const response = await httpClient.get<FetchBooksResponse>("/books", { params: params });
@@ -40,5 +41,10 @@ export const likeBook = async (bookId: number) => {
 
 export const unlikeBook = async (bookId: number) => {
     const response = await httpClient.delete(`/likes/${bookId}`);
+    return response.data;
+};
+
+export const fetchBestBooks = async () => {
+    const response = await httpClient.get<Book[]>(`/books/best`);
     return response.data;
 };
