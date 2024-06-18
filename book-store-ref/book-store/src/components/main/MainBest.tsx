@@ -16,6 +16,10 @@ function MainBest({ books }: Props) {
     );
 }
 
-const MainBestStyle = styled.div``;
+const MainBestStyle = styled.div`
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+`;
 
 export default MainBest;
