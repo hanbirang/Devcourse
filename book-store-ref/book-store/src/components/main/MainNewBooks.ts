@@ -15,6 +15,10 @@ function MainNewBooks({ books }: Props) {
     );
 }
 
-const MainNewBooksStyle = styled.div``;
+const MainNewBooksStyle = styled.div`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+`;
 
 export default MainNewBooks;
