@@ -44,6 +44,13 @@ function Banner({ banners }: Props) {
             </BannerButtonStyle>
 
             {/* 인디케이터 */}
+            <BannerIndicatorStyle>
+                {banners.map((_, index) => (
+                    <span
+                        className={index === currentIndex ? "active" : ""}
+                    ></span>
+                ))}
+            </BannerIndicatorStyle>
         </BannerStyle>
     );
 }
@@ -89,6 +96,27 @@ const BannerButtonStyle = styled.div`
 
         &.next {
             right: 10px;
+        }
+    }
+`;
+
+const BannerIndicatorStyle = styled.div`
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    span {
+        display: inline-block;
+        width: 13px;
+        height: 13px;
+        border-radius: 100px;
+        background: #fff;
+        margin: 0 4px;
+        cursor: pointer;
+
+        &.active {
+            background: ${({ theme }) => theme.color.primary};
         }
     }
 `;
