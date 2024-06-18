@@ -52,6 +52,7 @@ interface BannerContainerStyleProps {
 const BannerContainerStyle = styled.div<BannerContainerStyleProps>`
     display: flex;
     transform: translateX(${(props) => props.$transFormValue}%);
+    transition: transform 0.5s ease-in-out;
 `;
 
 const BannerButtonStyle = styled.div``;
