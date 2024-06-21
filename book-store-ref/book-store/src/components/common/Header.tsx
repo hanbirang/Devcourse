@@ -165,10 +165,11 @@ const HeaderStyle = styled.header<HeaderStyleProps>`
     @media screen AND ${({ theme }) => theme.mediaQuery.mobile} {
         height: 52px;
         .logo {
-            padding: 0 0 0 12px;
+            padding: 0 0 0 8px;
 
             img {
-                width: 140px;
+                width: 125px;
+                height: 46px;
             }
         }
 
