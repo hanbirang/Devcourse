@@ -41,7 +41,8 @@ const BooksListStyle = styled.div<BooksListStyleProps>`
     gap: 24px;
 
     @media screen AND ${({ theme }) => theme.mediaQuery.mobile} {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: ${({ view }) =>
+            view === "grid" ? "repeat(2, 1fr);" : "1fr"};
     }
 `;
 
